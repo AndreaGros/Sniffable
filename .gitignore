@@ -1,0 +1,18 @@
+# Python - file compilati
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambienti virtuali
+venv/
+env/
+
+# File di sistema e IDE
+.DS_Store
+.vscode/
+.idea/
+
+# File temporanei di cattura (i tuoi pacchetti sniffati)
+*.pcap
+*.cap
+*.log
