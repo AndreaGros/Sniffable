@@ -8,6 +8,7 @@ from kivy.properties import StringProperty
 class CommonNavigationRailItem(MDNavigationRailItem):
     text = StringProperty()
     icon = StringProperty()
+    screen_to_open = StringProperty()
 
 class SnifferScreen(MDScreen):
     pass
@@ -23,6 +24,7 @@ class NetworkSuiteApp(MDApp):
         return Builder.load_file("main.kv")
 
     def switch_screen(self, nameScreen):
+        # Il nome della screen deve corrispondere al 'name' nel manager
         self.root.ids.screen_manager.current = nameScreen
 
 if __name__ == "__main__":

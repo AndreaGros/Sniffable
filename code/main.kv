@@ -2,37 +2,36 @@
 <CommonNavigationRailItem>
     MDNavigationRailItemIcon:
         icon: root.icon
-        on_item_press: app.switch_screen(root.screen_to_open)
-
+        on_touch_down: if self.collide_point(*args[1].pos): app.switch_screen(root.screen_to_open)
     MDNavigationRailItemLabel:
         text: root.text
+
     
 
 <SnifferScreen>:
-    MDButton:
-        style: "elevated"
-        text: "Elevated"
+    MDLabel:
+        text: "Label"
+        color: "green"
 
 <SenderScreen>
     MDLabel:
         text: "Label"
-        color:  "red"
+        color: "red"
 
         
 MDBoxLayout:
 
     MDNavigationRail:
         type: "unselected"
-
         CommonNavigationRailItem:
             icon: "wifi"
             text: "Files"
-            screen_to_open: "sniffer"
+            screen_to_open: 'sniffer'
 
         CommonNavigationRailItem:
             icon: "package-variant"
             text: "Bookmark"
-            screen_to_open: "sender"
+            screen_to_open: 'sender'
 
 
     MDScreenManager:
@@ -44,6 +43,4 @@ MDBoxLayout:
 
         SenderScreen:
             name: "sender"
-            md_bg_color: "black"
-        
-
+            md_bg_color: self.theme_cls.backgroundColor
