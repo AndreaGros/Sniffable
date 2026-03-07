@@ -2,19 +2,28 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.navigationrail import MDNavigationRailItem
+from kivy.properties import StringProperty
 
-class MenuScreen(MDScreen):
-    pass
+class CommonNavigationRailItem(MDNavigationRailItem):
+    text = StringProperty()
+    icon = StringProperty()
 
 class SnifferScreen(MDScreen):
     pass
 
+class SenderScreen(MDScreen):
+    pass
+
+
 class NetworkSuiteApp(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Light"
-        self.theme_cls.primary_palette = "Purple"
-        
+        self.theme_cls.primary_palette = "Green"
         return Builder.load_file("main.kv")
+
+    def switch_screen(self, nameScreen):
+        self.root.ids.screen_manager.current = nameScreen
 
 if __name__ == "__main__":
     NetworkSuiteApp().run()
