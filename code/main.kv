@@ -1,8 +1,9 @@
 # sniffer.kv
 <CommonNavigationRailItem>
+    on_release: app.switch_screen(self.screen_to_open)
     MDNavigationRailItemIcon:
         icon: root.icon
-        on_touch_down: if self.collide_point(*args[1].pos): app.switch_screen(root.screen_to_open)
+        disabled: True
     MDNavigationRailItemLabel:
         text: root.text
 
