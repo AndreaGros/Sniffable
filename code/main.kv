@@ -1,9 +1,8 @@
 # sniffer.kv
-<CommonNavigationRailItem>
-    on_release: app.switch_screen(self.screen_to_open)
+<CommonNavigationRailItem>:
+    on_active: if self.active: app.switch_screen(self.screen_to_open)
     MDNavigationRailItemIcon:
         icon: root.icon
-        disabled: True
     MDNavigationRailItemLabel:
         text: root.text
 
@@ -28,11 +27,13 @@ MDBoxLayout:
             icon: "wifi"
             text: "Files"
             screen_to_open: 'sniffer'
+            on_release: app.switch_screen(self.screen_to_open)
 
         CommonNavigationRailItem:
             icon: "package-variant"
             text: "Bookmark"
             screen_to_open: 'sender'
+            on_release: app.switch_screen(self.screen_to_open)
 
 
     MDScreenManager:

@@ -26,6 +26,7 @@ class NetworkSuiteApp(MDApp):
     def switch_screen(self, nameScreen):
         # Il nome della screen deve corrispondere al 'name' nel manager
         self.root.ids.screen_manager.current = nameScreen
+        print(nameScreen)
 
 if __name__ == "__main__":
     NetworkSuiteApp().run()
