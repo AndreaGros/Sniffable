@@ -3,7 +3,10 @@ from kivy.lang import Builder
 from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.navigationrail import MDNavigationRailItem
+from kivy.clock import Clock
 from kivy.properties import StringProperty, BooleanProperty
+
+from sniffer_logic import Sniffer
 
 class CommonNavigationRailItem(MDNavigationRailItem):
     text = StringProperty()
@@ -11,7 +14,14 @@ class CommonNavigationRailItem(MDNavigationRailItem):
     screen_to_open = StringProperty()
 
 class SnifferScreen(MDScreen):
-    pass
+    def on_enter(self):
+        self.sniffer = Sniffer(
+            iface="eth0",
+            on_packet=self.packet_thread,
+        )
+    
+    def packet_thread(self, data):
+        Clock.schedule_once(lambda dt: self._add_row(data))
 
 class SenderScreen(MDScreen):
     pass
