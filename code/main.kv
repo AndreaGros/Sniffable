@@ -3,35 +3,181 @@
     on_active: if self.active: app.switch_screen(self.screen_to_open)
     MDNavigationRailItemIcon:
         icon: root.icon
-    MDNavigationRailItemLabel:
-        text: root.text
 
     
 
 <SnifferScreen>:
-    MDLabel:
-        text: "Label"
-        color: "green"
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 0
+        # ── COLUMN HEADERS ───────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "28dp"
+            padding: "8dp", "4dp"
+            spacing: "8dp"
+            md_bg_color: app.theme_cls.surfaceContainerHighColor
+
+            MDLabel:
+                text: "#"
+                font_style: "Label"
+                role: "small"
+                bold: True
+                size_hint_x: None
+                width: "36dp"
+                halign: "right"
+                theme_text_color: "Secondary"
+
+            MDBoxLayout:
+                size_hint_x: None
+                width: "1dp"
+
+            MDLabel:
+                text: "Time"
+                font_style: "Label"
+                role: "small"
+                bold: True
+                size_hint_x: None
+                width: "76dp"
+                theme_text_color: "Secondary"
+
+            MDBoxLayout:
+                size_hint_x: None
+                width: "1dp"
+
+            MDLabel:
+                text: "Source"
+                font_style: "Label"
+                role: "small"
+                bold: True
+                size_hint_x: None
+                width: "120dp"
+                theme_text_color: "Secondary"
+
+            MDBoxLayout:
+                size_hint_x: None
+                width: "1dp"
+
+            MDLabel:
+                text: "Destination"
+                font_style: "Label"
+                role: "small"
+                bold: True
+                size_hint_x: None
+                width: "120dp"
+                theme_text_color: "Secondary"
+
+            MDBoxLayout:
+                size_hint_x: None
+                width: "1dp"
+
+            MDLabel:
+                text: "Proto"
+                font_style: "Label"
+                role: "small"
+                bold: True
+                size_hint_x: None
+                width: "52dp"
+                halign: "center"
+                theme_text_color: "Secondary"
+
+            MDBoxLayout:
+                size_hint_x: None
+                width: "1dp"
+
+            MDLabel:
+                text: "Len"
+                font_style: "Label"
+                role: "small"
+                bold: True
+                size_hint_x: None
+                width: "52dp"
+                halign: "right"
+                theme_text_color: "Secondary"
+
+            MDBoxLayout:
+                size_hint_x: None
+                width: "1dp"
+
+            MDLabel:
+                text: "Info"
+                font_style: "Label"
+                role: "small"
+                bold: True
+                theme_text_color: "Secondary"
+        
+        # ── PACKETS ───────────────────────────────────────────
+        MDScrollView:
+            do_scroll_x: False
+
+            MDBoxLayout:
+                id: main_scroll
+                orientation: "vertical"
+                adaptive_height: True
+
+                MDBoxLayout:
+                    adaptive_height: True
+
+        
+        # ── BUTTONS BAR ──────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "56dp"
+            padding: "16dp", "8dp"
+            spacing: "12dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDButton:
+                style: "text"
+                size_hint_x: None
+                width: "72dp"
+
+                MDButtonText:
+                    text: "Clear"
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.errorColor
+
+            MDButton:
+                id: start_stop_btn
+                style: "filled"
+                size_hint_x: None
+                width: "100dp"
+                theme_bg_color: "Custom"
+                md_bg_color:
+                    app.theme_cls.errorColor if app.capturing else \
+                    app.theme_cls.primaryColor
+
+                MDButtonText:
+                    id: start_stop_label
+                    text: "Start" if not app.capturing else "Stop"
+                    theme_text_color: "Custom"
+                    text_color: (1, 1, 1, 1)
 
 <SenderScreen>
-    MDLabel:
-        text: "Label"
-        color: "red"
+    MDBoxLayout:
+        orientation: "vertical"
+        MDBoxLayout:
+            orientation: "horizontal"
+
+            
 
         
 MDBoxLayout:
-
+    md_bg_color: self.theme_cls.backgroundColor
     MDNavigationRail:
+        md_bg_color: "lightgray"
+        theme_bg_color: "Custom"
+        radius: [0, 16, 16, 0]
         type: "unselected"
         CommonNavigationRailItem:
             icon: "wifi"
-            text: "Files"
             screen_to_open: 'sniffer'
             on_release: app.switch_screen(self.screen_to_open)
 
         CommonNavigationRailItem:
             icon: "package-variant"
-            text: "Bookmark"
             screen_to_open: 'sender'
             on_release: app.switch_screen(self.screen_to_open)
 

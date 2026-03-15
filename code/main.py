@@ -3,7 +3,7 @@ from kivy.lang import Builder
 from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.navigationrail import MDNavigationRailItem
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, BooleanProperty
 
 class CommonNavigationRailItem(MDNavigationRailItem):
     text = StringProperty()
@@ -18,6 +18,7 @@ class SenderScreen(MDScreen):
 
 
 class NetworkSuiteApp(MDApp):
+    capturing = BooleanProperty(False)
     def build(self):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Green"
@@ -26,7 +27,6 @@ class NetworkSuiteApp(MDApp):
     def switch_screen(self, nameScreen):
         # Il nome della screen deve corrispondere al 'name' nel manager
         self.root.ids.screen_manager.current = nameScreen
-        print(nameScreen)
 
 if __name__ == "__main__":
     NetworkSuiteApp().run()
