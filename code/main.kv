@@ -158,8 +158,46 @@
 <SenderScreen>
     MDBoxLayout:
         orientation: "vertical"
+        spacing: 0
+
+        # ── SEND BAR ─────────────────────────────────────────────────
         MDBoxLayout:
+            id: send_bar
             orientation: "horizontal"
+            size_hint_y: None
+            height: "56dp"
+            padding: "16dp", "8dp"
+            spacing: "12dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                id: send_status
+                text: "Ready"
+                font_style: "Body"
+                role: "medium"
+                theme_text_color: "Secondary"
+
+            MDButton:
+                style: "text"
+                size_hint_x: None
+                width: "80dp"
+
+                MDButtonText:
+                    text: "Clear"
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.errorColor
+
+            MDButton:
+                id: send_btn
+                style: "filled"
+                size_hint_x: None
+                width: "110dp"
+                theme_bg_color: "Custom"
+                md_bg_color: app.theme_cls.primaryColor
+
+                MDButtonText:
+                    text: "  Send"
+                    theme_text_color: "Custom"
 
             
 
