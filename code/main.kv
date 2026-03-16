@@ -108,13 +108,17 @@
                 theme_text_color: "Secondary"
         
         # ── PACKETS ───────────────────────────────────────────
-        MDScrollView:
+        RecycleView:
+            id: packet_list
+            viewclass: "PacketRow"
             do_scroll_x: False
 
-            MDBoxLayout:
-                id: packet_list
+            RecycleBoxLayout:
                 orientation: "vertical"
-                adaptive_height: True
+                default_size_hint: 1, None
+                default_size: 0, "40dp"
+                size_hint_y: None
+                height: self.minimum_height
 
         
         # ── BUTTONS BAR ──────────────────────────────────────────────────

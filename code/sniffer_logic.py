@@ -16,20 +16,26 @@ class Sniffer:
         self._thread = threading.Thread(target=self.sniffing, daemon=True)
         self._thread.start()
 
+    def stop(self):
+        pass
+
     def sniffing(self):
         print("Start sniffing...")
         pkts = sniff(prn=self.callbackPacket)
         return pkts
 
     def callbackPacket(self, pkt):
+        if not pkt.haslayer(IP):
+            return 
         data = {
             "src": pkt[IP].src,
             "dst": pkt[IP].dst,
             "proto": "TCP",
-            "info": f"{pkt[TCP].sport} → {pkt[TCP].dport}",
+            "info": f"prova",
+            "length": "prova"
         }
         if self.on_packet:
-            self.on_packet(pkt)
+            self.on_packet(data)
 
     def viewComunicationRaw(self, com):
         print(com.summary())
