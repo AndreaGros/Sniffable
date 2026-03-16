@@ -1,5 +1,7 @@
 from scapy.all import *
+from scapy.layers.inet import IP, TCP, UDP, ICMP
 import threading
+
 
 class Sniffer:
     def __init__(self, iface="eth0", on_packet=None, bpf_filter=""):
@@ -20,6 +22,12 @@ class Sniffer:
         return pkts
 
     def callbackPacket(self, pkt):
+        data = {
+            "src": pkt[IP].src,
+            "dst": pkt[IP].dst,
+            "proto": "TCP",
+            "info": f"{pkt[TCP].sport} → {pkt[TCP].dport}",
+        }
         if self.on_packet:
             self.on_packet(pkt)
 

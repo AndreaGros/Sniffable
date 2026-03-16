@@ -1,7 +1,7 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
-from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.navigationrail import MDNavigationRailItem
 from kivy.clock import Clock
 from kivy.properties import StringProperty, BooleanProperty
@@ -15,17 +15,44 @@ class CommonNavigationRailItem(MDNavigationRailItem):
 
 class SnifferScreen(MDScreen):
     def on_enter(self):
+        print("On_enter")
         self.sniffer = Sniffer(
             iface="eth0",
             on_packet=self.packet_thread,
         )
+
+    def on_leave(self):
+        if hasattr(self, "sniffer"):
+            self.sniffer.stop()
     
+    def start_sniffer(self):
+        print("Ciao")
+        self.sniffer.start()
+
     def packet_thread(self, data):
-        Clock.schedule_once(lambda dt: self._add_row(data))
+        Clock.schedule_once(lambda dt: self.add_row(data))
+
+    def add_row(self, data):
+        row = PacketRow(
+            src_ip   = data["src"],
+            dst_ip   = data["dst"],
+            protocol = data["proto"],
+            info     = data["info"],
+            length   = str(data["length"]),
+        )
+        self.ids.packet_list.add_widget(row)
+
+class PacketRow(MDBoxLayout):
+    index     = StringProperty("")
+    timestamp = StringProperty("")
+    src_ip    = StringProperty("")
+    dst_ip    = StringProperty("")
+    protocol  = StringProperty("")
+    length    = StringProperty("")
+    info      = StringProperty("")
 
 class SenderScreen(MDScreen):
     pass
-
 
 class NetworkSuiteApp(MDApp):
     capturing = BooleanProperty(False)

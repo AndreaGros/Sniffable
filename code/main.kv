@@ -112,12 +112,9 @@
             do_scroll_x: False
 
             MDBoxLayout:
-                id: main_scroll
+                id: packet_list
                 orientation: "vertical"
                 adaptive_height: True
-
-                MDBoxLayout:
-                    adaptive_height: True
 
         
         # ── BUTTONS BAR ──────────────────────────────────────────────────
@@ -145,6 +142,7 @@
                 size_hint_x: None
                 width: "100dp"
                 theme_bg_color: "Custom"
+                on_release: print("bottone premuto") or root.start_sniffer()
                 md_bg_color:
                     app.theme_cls.errorColor if app.capturing else \
                     app.theme_cls.primaryColor
@@ -154,6 +152,26 @@
                     text: "Start" if not app.capturing else "Stop"
                     theme_text_color: "Custom"
                     text_color: (1, 1, 1, 1)
+
+<PacketRow>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: "40dp"
+
+    MDLabel:
+        text: root.src_ip
+
+    MDLabel:
+        text: root.dst_ip
+
+    MDLabel:
+        text: root.protocol
+
+    MDLabel:
+        text: root.length
+
+    MDLabel:
+        text: root.info
 
 <SenderScreen>
     MDBoxLayout:
