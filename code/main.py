@@ -16,6 +16,8 @@ class CommonNavigationRailItem(MDNavigationRailItem):
 
 
 class SnifferScreen(MDScreen):
+    capturing = BooleanProperty(False)
+    
     def on_enter(self):
         self.packets = []
         self.sniffer = Sniffer(
@@ -28,7 +30,12 @@ class SnifferScreen(MDScreen):
             self.sniffer.stop()
 
     def start_sniffer(self):
+        capturing = True
         self.sniffer.start()
+
+    def stop_sniffer(self):
+        capturing = False
+        self.sniffer.stop()
 
     def packet_thread(self, data):
         Clock.schedule_once(lambda dt: self.add_row(data))
@@ -63,8 +70,6 @@ class SenderScreen(MDScreen):
 
 
 class NetworkSuiteApp(MDApp):
-    capturing = BooleanProperty(False)
-
     def build(self):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Green"

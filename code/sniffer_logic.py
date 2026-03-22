@@ -10,6 +10,7 @@ class Sniffer:
         self.bpf_filter = bpf_filter
         self._running = False
         self._thread = None
+        self.stop_sniffer = threading.Event()
 
     def start(self):
         self._running = True
@@ -17,7 +18,7 @@ class Sniffer:
         self._thread.start()
 
     def stop(self):
-        pass
+        self.stop_sniffer.set()
 
     def sniffing(self):
         print("Start sniffing...")
@@ -27,13 +28,22 @@ class Sniffer:
     def callbackPacket(self, pkt):
         if not pkt.haslayer(IP):
             return 
+        
         data = {
             "src": pkt[IP].src,
             "dst": pkt[IP].dst,
-            "proto": "TCP",
+            "proto": "Undefined",
             "info": f"prova",
             "length": "prova"
         }
+
+        if pkt.haslayer(TCP):
+            data["proto"]="TCP"
+        elif pkt.haslayer(UDP):
+            data["proto"]="UDP"
+        elif pkt.haslayer(ICMP):
+            data["proto"]="ICMP"
+        
         if self.on_packet:
             self.on_packet(data)
 

@@ -146,14 +146,14 @@
                 size_hint_x: None
                 width: "100dp"
                 theme_bg_color: "Custom"
-                on_release: print("bottone premuto") or root.start_sniffer()
+                on_release: root.start_sniffer() if root.capturing else  root.stop_sniffer()
                 md_bg_color:
-                    app.theme_cls.errorColor if app.capturing else \
+                    app.theme_cls.errorColor if root.capturing else \
                     app.theme_cls.primaryColor
 
                 MDButtonText:
                     id: start_stop_label
-                    text: "Start" if not app.capturing else "Stop"
+                    text: "Start" if not root.capturing else "Stop"
                     theme_text_color: "Custom"
                     text_color: (1, 1, 1, 1)
 
