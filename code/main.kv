@@ -134,7 +134,7 @@
                 style: "text"
                 size_hint_x: None
                 width: "72dp"
-
+                on_release: root.clear()
                 MDButtonText:
                     text: "Clear"
                     theme_text_color: "Custom"
@@ -146,7 +146,7 @@
                 size_hint_x: None
                 width: "100dp"
                 theme_bg_color: "Custom"
-                on_release: root.start_sniffer() if root.capturing else  root.stop_sniffer()
+                on_release: root.start_sniffer() if not root.capturing else root.stop_sniffer()
                 md_bg_color:
                     app.theme_cls.errorColor if root.capturing else \
                     app.theme_cls.primaryColor
@@ -161,6 +161,9 @@
     orientation: "horizontal"
     size_hint_y: None
     height: "40dp"
+
+    MDLabel:
+        text: root.index
 
     MDLabel:
         text: root.src_ip
@@ -203,7 +206,6 @@
                 style: "text"
                 size_hint_x: None
                 width: "80dp"
-
                 MDButtonText:
                     text: "Clear"
                     theme_text_color: "Custom"

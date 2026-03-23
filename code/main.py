@@ -16,12 +16,12 @@ class CommonNavigationRailItem(MDNavigationRailItem):
 
 
 class SnifferScreen(MDScreen):
+    index = 1
     capturing = BooleanProperty(False)
-    
+
     def on_enter(self):
         self.packets = []
         self.sniffer = Sniffer(
-            iface="eth0",
             on_packet=self.packet_thread,
         )
 
@@ -30,12 +30,17 @@ class SnifferScreen(MDScreen):
             self.sniffer.stop()
 
     def start_sniffer(self):
-        capturing = True
+        self.capturing = True
         self.sniffer.start()
 
     def stop_sniffer(self):
-        capturing = False
+        self.capturing = False
         self.sniffer.stop()
+
+    def clear(self):
+        self.packets = []
+        self.ids.packet_list.data = self.packets
+        self.index = 1
 
     def packet_thread(self, data):
         Clock.schedule_once(lambda dt: self.add_row(data))
@@ -43,15 +48,16 @@ class SnifferScreen(MDScreen):
     def add_row(self, data):
         self.packets.append(
             {
+                "index": str(self.index),
                 "src_ip": data["src"],
                 "dst_ip": data["dst"],
                 "protocol": data["proto"],
                 "info": data["info"],
                 "length": str(data["length"]),
-                "index": "",
                 "timestamp": "",
             }
         )
+        self.index += 1
         self.ids.packet_list.data = self.packets
 
 
