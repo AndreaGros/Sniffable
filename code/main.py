@@ -1,6 +1,7 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.behaviors import HoverBehavior
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.navigationrail import MDNavigationRailItem
 from kivy.clock import Clock
@@ -83,7 +84,7 @@ class SnifferScreen(MDScreen):
         print(self.filters)
 
 
-class PacketRow(MDBoxLayout):
+class PacketRow(MDBoxLayout, HoverBehavior):
     index = StringProperty("")
     timestamp = StringProperty("")
     src_ip = StringProperty("")
@@ -91,6 +92,16 @@ class PacketRow(MDBoxLayout):
     protocol = StringProperty("")
     length = StringProperty("")
     info = StringProperty("")
+
+    def on_enter(self):  # mouse sopra
+        self.md_bg_color = "lightgreen"
+    
+    def on_leave(self):
+        self.md_bg_color = "white"
+
+
+class InfoPacketScreen(MDScreen):
+    pass
 
 
 class SenderScreen(MDScreen):

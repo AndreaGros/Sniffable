@@ -111,12 +111,11 @@
         RecycleView:
             id: packet_list
             viewclass: "PacketRow"
-            do_scroll_x: False
-
+            always_overscroll: False  # ← rimuove l'effetto rimbalzo
             RecycleBoxLayout:
                 orientation: "vertical"
+                default_size: None, "40dp"
                 default_size_hint: 1, None
-                default_size: 0, "40dp"
                 size_hint_y: None
                 height: self.minimum_height
 
@@ -271,6 +270,14 @@
         font_style: "Label"
         role: "small"
         font_size: "13sp"
+
+<InfoPacketScreen>
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 0
+        MDLabel:
+            text: "content"
+
 <SenderScreen>
     MDBoxLayout:
         orientation: "vertical"
@@ -339,6 +346,10 @@ MDBoxLayout:
 
         SnifferScreen:
             name: "sniffer"
+            md_bg_color: self.theme_cls.backgroundColor
+        
+        InfoPacketScreen:
+            name: "Info"
             md_bg_color: self.theme_cls.backgroundColor
 
         SenderScreen:
