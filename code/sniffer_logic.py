@@ -11,6 +11,7 @@ class Sniffer:
         self._sniffer = None
 
     def start(self):
+        print(self.bpf_filter)
         self._sniffer = AsyncSniffer(
             iface=self.iface,
             filter=self.bpf_filter,

@@ -18,10 +18,13 @@ class CommonNavigationRailItem(MDNavigationRailItem):
 class SnifferScreen(MDScreen):
     index = 1
     capturing = BooleanProperty(False)
+    filters = StringProperty("")
+    filtersList = []
 
     def on_enter(self):
         self.packets = []
         self.sniffer = Sniffer(
+            bpf_filter=self.filters,
             on_packet=self.packet_thread,
         )
 
@@ -59,6 +62,25 @@ class SnifferScreen(MDScreen):
         )
         self.index += 1
         self.ids.packet_list.data = self.packets
+        self.ids.packet_list.scroll_y = 0
+
+    def add_remove_filter(self, filter):
+        self.filters = ""
+
+        if filter not in self.filtersList:
+            self.filtersList.append(filter)
+        else:
+            self.filtersList.remove(filter)
+
+        for filter in self.filtersList:
+            if len(self.filters) == 0:
+                self.filters += filter
+            else:
+                self.filters += f" or {filter}"
+
+        self.sniffer.bpf_filter = self.filters
+        print(self.filtersList)
+        print(self.filters)
 
 
 class PacketRow(MDBoxLayout):

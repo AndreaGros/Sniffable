@@ -14,7 +14,7 @@
         MDBoxLayout:
             orientation: "horizontal"
             size_hint_y: None
-            height: "28dp"
+            height: "36dp"
             padding: "8dp", "4dp"
             spacing: "8dp"
             md_bg_color: app.theme_cls.surfaceContainerHighColor
@@ -22,7 +22,7 @@
             MDLabel:
                 text: "#"
                 font_style: "Label"
-                role: "small"
+                font_size: "13sp"
                 bold: True
                 size_hint_x: None
                 width: "36dp"
@@ -36,7 +36,7 @@
             MDLabel:
                 text: "Time"
                 font_style: "Label"
-                role: "small"
+                font_size: "13sp"
                 bold: True
                 size_hint_x: None
                 width: "76dp"
@@ -49,7 +49,7 @@
             MDLabel:
                 text: "Source"
                 font_style: "Label"
-                role: "small"
+                font_size: "13sp"
                 bold: True
                 size_hint_x: None
                 width: "120dp"
@@ -62,7 +62,7 @@
             MDLabel:
                 text: "Destination"
                 font_style: "Label"
-                role: "small"
+                font_size: "13sp"
                 bold: True
                 size_hint_x: None
                 width: "120dp"
@@ -75,7 +75,7 @@
             MDLabel:
                 text: "Proto"
                 font_style: "Label"
-                role: "small"
+                font_size: "13sp"
                 bold: True
                 size_hint_x: None
                 width: "52dp"
@@ -89,7 +89,7 @@
             MDLabel:
                 text: "Len"
                 font_style: "Label"
-                role: "small"
+                font_size: "13sp"
                 bold: True
                 size_hint_x: None
                 width: "52dp"
@@ -103,7 +103,7 @@
             MDLabel:
                 text: "Info"
                 font_style: "Label"
-                role: "small"
+                font_size: "13sp"
                 bold: True
                 theme_text_color: "Secondary"
         
@@ -157,29 +157,120 @@
                     theme_text_color: "Custom"
                     text_color: (1, 1, 1, 1)
 
+            
+            MDButton:
+                id: TCP_filter
+                style: "text" if "tcp" not in root.filtersList else "filled"
+                theme_bg_color: "Custom"
+                md_bg_color: (0, 0, 1, 1) if "tcp" in root.filtersList else (0, 0, 0, 0)
+                size_hint_x: None
+                width: "72dp"
+                on_release: root.add_remove_filter("tcp")
+                MDButtonText:
+                    text: "TCP"
+                    theme_text_color: "Custom"
+                    text_color: "white" if "tcp" in root.filtersList else app.theme_cls.primaryColor
+
+            MDButton:
+                id: UDP_filter
+                style: "text" if 'udp' not in root.filtersList else "filled"
+                theme_bg_color: "Custom"
+                md_bg_color: (0, 0, 1, 1) if "udp" in root.filtersList else (0, 0, 0, 0)
+                size_hint_x: None
+                width: "72dp"
+                on_release: root.add_remove_filter("udp")
+                MDButtonText:
+                    text: "UDP"
+                    theme_text_color: "Custom"
+                    text_color: "white" if "udp" in root.filtersList else app.theme_cls.primaryColor
+
 <PacketRow>:
     orientation: "horizontal"
     size_hint_y: None
     height: "40dp"
+    padding: "8dp", "4dp"
+    spacing: "8dp"
 
     MDLabel:
         text: root.index
+        font_style: "Label"
+        role: "small"
+        font_size: "13sp"
+        size_hint_x: None
+        width: "36dp"
+        halign: "right"
+
+    MDBoxLayout:
+        size_hint_x: None
+        width: "1dp"
+
+    MDLabel:
+        text: root.timestamp
+        font_style: "Label"
+        role: "small"
+        font_size: "13sp"
+        size_hint_x: None
+        width: "76dp"
+
+    MDBoxLayout:
+        size_hint_x: None
+        width: "1dp"
 
     MDLabel:
         text: root.src_ip
+        font_style: "Label"
+        role: "small"
+        font_size: "13sp"
+        size_hint_x: None
+        width: "120dp"
+
+    MDBoxLayout:
+        size_hint_x: None
+        width: "1dp"
 
     MDLabel:
         text: root.dst_ip
+        font_style: "Label"
+        role: "small"
+        font_size: "13sp"
+        size_hint_x: None
+        width: "120dp"
+
+    MDBoxLayout:
+        size_hint_x: None
+        width: "1dp"
 
     MDLabel:
         text: root.protocol
+        font_style: "Label"
+        role: "small"
+        font_size: "13sp"
+        size_hint_x: None
+        width: "52dp"
+        halign: "center"
+
+    MDBoxLayout:
+        size_hint_x: None
+        width: "1dp"
 
     MDLabel:
         text: root.length
+        font_style: "Label"
+        role: "small"
+        font_size: "13sp"
+        size_hint_x: None
+        width: "52dp"
+        halign: "right"
+
+    MDBoxLayout:
+        size_hint_x: None
+        width: "1dp"
 
     MDLabel:
         text: root.info
-
+        font_style: "Label"
+        role: "small"
+        font_size: "13sp"
 <SenderScreen>
     MDBoxLayout:
         orientation: "vertical"
