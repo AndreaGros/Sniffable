@@ -1,9 +1,12 @@
+import datetime
+
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.behaviors import HoverBehavior
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.navigationrail import MDNavigationRailItem
+from kivymd.uix.label import MDLabel
 from kivy.clock import Clock
 from kivy.properties import StringProperty, BooleanProperty
 
@@ -23,23 +26,24 @@ class SnifferScreen(MDScreen):
     filtersList = []
 
     def on_enter(self):
+        self.app = MDApp.get_running_app()
         self.packets = []
-        self.sniffer = Sniffer(
+        self.app.sniffer = Sniffer(
             bpf_filter=self.filters,
             on_packet=self.packet_thread,
         )
 
     def on_leave(self):
         if hasattr(self, "sniffer"):
-            self.sniffer.stop()
+            self.app.sniffer.stop()
 
     def start_sniffer(self):
         self.capturing = True
-        self.sniffer.start()
+        self.app.sniffer.start()
 
     def stop_sniffer(self):
         self.capturing = False
-        self.sniffer.stop()
+        self.app.sniffer.stop()
 
     def clear(self):
         self.packets = []
@@ -52,16 +56,15 @@ class SnifferScreen(MDScreen):
     def add_row(self, data):
         self.packets.append(
             {
-                "index": str(self.index),
+                "index": data["index"],
                 "src_ip": data["src"],
                 "dst_ip": data["dst"],
                 "protocol": data["proto"],
                 "info": data["info"],
                 "length": str(data["length"]),
-                "timestamp": "",
+                "timestamp": str(datetime.datetime.now())
             }
         )
-        self.index += 1
         self.ids.packet_list.data = self.packets
         self.ids.packet_list.scroll_y = 0
 
@@ -79,7 +82,7 @@ class SnifferScreen(MDScreen):
             else:
                 self.filters += f" or {filter}"
 
-        self.sniffer.bpf_filter = self.filters
+        self.app.sniffer.bpf_filter = self.filters
         print(self.filtersList)
         print(self.filters)
 
@@ -94,14 +97,25 @@ class PacketRow(MDBoxLayout, HoverBehavior):
     info = StringProperty("")
 
     def on_enter(self):  # mouse sopra
+        self._original_color = self.md_bg_color 
         self.md_bg_color = "lightgreen"
-    
+
     def on_leave(self):
-        self.md_bg_color = "white"
+        self.md_bg_color = self._original_color
+
+    def on_touch_up(self, touch):
+        if self.collide_point(*touch.pos) and not touch.is_mouse_scrolling:
+            app = MDApp.get_running_app()
+            screen = app.root.ids.screen_manager.get_screen("info")
+            screen.load_packet(self.index)
+            app.switch_screen("info")
 
 
 class InfoPacketScreen(MDScreen):
-    pass
+    def load_packet(self, index):
+        self.ids.layer_container.clear_widgets()
+        lbl=MDLabel(text=index)
+        self.ids.layer_container.add_widget(lbl)
 
 
 class SenderScreen(MDScreen):
@@ -110,6 +124,7 @@ class SenderScreen(MDScreen):
 
 class NetworkSuiteApp(MDApp):
     def build(self):
+        self.sniffer = None
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Green"
         return Builder.load_file("main.kv")

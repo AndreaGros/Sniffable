@@ -159,29 +159,29 @@
             
             MDButton:
                 id: TCP_filter
-                style: "text" if "tcp" not in root.filtersList else "filled"
+                style: "text" if "tcp" not in root.filters else "filled"
                 theme_bg_color: "Custom"
-                md_bg_color: (0, 0, 1, 1) if "tcp" in root.filtersList else (0, 0, 0, 0)
+                md_bg_color: (0, 0, 1, 1) if "tcp" in root.filters else (0, 0, 0, 0)
                 size_hint_x: None
                 width: "72dp"
                 on_release: root.add_remove_filter("tcp")
                 MDButtonText:
                     text: "TCP"
                     theme_text_color: "Custom"
-                    text_color: "white" if "tcp" in root.filtersList else app.theme_cls.primaryColor
+                    text_color: "white" if "tcp" in root.filters else app.theme_cls.primaryColor
 
             MDButton:
                 id: UDP_filter
-                style: "text" if 'udp' not in root.filtersList else "filled"
+                style: "text" if 'udp' not in root.filters else "filled"
                 theme_bg_color: "Custom"
-                md_bg_color: (0, 0, 1, 1) if "udp" in root.filtersList else (0, 0, 0, 0)
+                md_bg_color: (0, 0, 1, 1) if "udp" in root.filters else (0, 0, 0, 0)
                 size_hint_x: None
                 width: "72dp"
                 on_release: root.add_remove_filter("udp")
                 MDButtonText:
                     text: "UDP"
                     theme_text_color: "Custom"
-                    text_color: "white" if "udp" in root.filtersList else app.theme_cls.primaryColor
+                    text_color: "white" if "udp" in root.filters else app.theme_cls.primaryColor
 
 <PacketRow>:
     orientation: "horizontal"
@@ -189,6 +189,7 @@
     height: "40dp"
     padding: "8dp", "4dp"
     spacing: "8dp"
+    screen_to_open: "Info"
 
     MDLabel:
         text: root.index
@@ -274,9 +275,35 @@
 <InfoPacketScreen>
     MDBoxLayout:
         orientation: "vertical"
-        spacing: 0
-        MDLabel:
-            text: "content"
+
+        # Top bar
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "56dp"
+            padding: "8dp"
+            spacing: "8dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDIconButton:
+                icon: "arrow-left"
+                on_release: app.switch_screen("sniffer")
+
+            MDLabel:
+                text: "Packet Detail"
+                font_style: "Title"
+                role: "medium"
+                bold: True
+
+        # Contenuto scrollabile
+        ScrollView:
+            MDBoxLayout:
+                id: layer_container
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: "8dp"
+                spacing: "4dp"
 
 <SenderScreen>
     MDBoxLayout:
@@ -349,7 +376,7 @@ MDBoxLayout:
             md_bg_color: self.theme_cls.backgroundColor
         
         InfoPacketScreen:
-            name: "Info"
+            name: "info"
             md_bg_color: self.theme_cls.backgroundColor
 
         SenderScreen:

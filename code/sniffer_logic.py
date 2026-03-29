@@ -4,6 +4,10 @@ from scapy.layers.inet import IP, TCP, UDP, ICMP
 
 
 class Sniffer:
+
+    index = 0
+    packets = {}
+
     def __init__(self, iface=None, on_packet=None, bpf_filter=""):
         self.iface = iface
         self.on_packet = on_packet
@@ -29,7 +33,10 @@ class Sniffer:
         if not pkt.haslayer(IP):
             return
 
+        self.index += 1
+
         data = {
+            "index": str(self.index),
             "src": pkt[IP].src,
             "dst": pkt[IP].dst,
             "proto": "Undefined",
@@ -39,6 +46,7 @@ class Sniffer:
 
         if pkt.haslayer(TCP):
             data["proto"] = "TCP"
+            data["info"] = str(pkt[TCP].flags)
         elif pkt.haslayer(UDP):
             data["proto"] = "UDP"
         elif pkt.haslayer(ICMP):
