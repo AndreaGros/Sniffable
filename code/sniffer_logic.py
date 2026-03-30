@@ -56,3 +56,11 @@ class Sniffer:
 
         if self.on_packet:
             self.on_packet(data)
+            self.packets[str(self.index)] = pkt
+
+    def selectSinglePacket(self, index):
+        # dizionario per non passare scapy nel main
+        result = {}
+        pkt = self.packets[str(index)]
+        print(pkt.layers)
+        return self.packets[str(index)]

@@ -48,7 +48,7 @@ class SnifferScreen(MDScreen):
     def clear(self):
         self.packets = []
         self.ids.packet_list.data = self.packets
-        self.index = 1
+        self.app.sniffer.index = 0
 
     def packet_thread(self, data):
         Clock.schedule_once(lambda dt: self.add_row(data))
@@ -62,7 +62,7 @@ class SnifferScreen(MDScreen):
                 "protocol": data["proto"],
                 "info": data["info"],
                 "length": str(data["length"]),
-                "timestamp": str(datetime.datetime.now())
+                "timestamp": str(datetime.datetime.now()),
             }
         )
         self.ids.packet_list.data = self.packets
@@ -97,7 +97,7 @@ class PacketRow(MDBoxLayout, HoverBehavior):
     info = StringProperty("")
 
     def on_enter(self):  # mouse sopra
-        self._original_color = self.md_bg_color 
+        self._original_color = self.md_bg_color
         self.md_bg_color = "lightgreen"
 
     def on_leave(self):
@@ -109,13 +109,16 @@ class PacketRow(MDBoxLayout, HoverBehavior):
             screen = app.root.ids.screen_manager.get_screen("info")
             screen.load_packet(self.index)
             app.switch_screen("info")
+            app.sniffer.stop()
 
 
 class InfoPacketScreen(MDScreen):
     def load_packet(self, index):
         self.ids.layer_container.clear_widgets()
-        lbl=MDLabel(text=index)
+        lbl = MDLabel(text=index)
         self.ids.layer_container.add_widget(lbl)
+        app = MDApp.get_running_app()
+        print(app.sniffer.selectSinglePacket(index))
 
 
 class SenderScreen(MDScreen):
