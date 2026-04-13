@@ -62,5 +62,7 @@ class Sniffer:
         # dizionario per non passare scapy nel main
         result = {}
         pkt = self.packets[str(index)]
+        while pkt:
+            print(f"Layer trovato: {pkt.name}")
         print(pkt.layers)
         return self.packets[str(index)]

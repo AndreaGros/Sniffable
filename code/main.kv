@@ -1,7 +1,8 @@
-<CommonNavigationRailItem>:
-    on_active: if self.active: app.switch_screen(self.screen_to_open)
-    MDNavigationRailItemIcon:
+<CommonNavItem>:
+    MDNavigationItemIcon:
         icon: root.icon
+    MDNavigationItemLabel:
+        text: root.text
 
 <SnifferScreen>:
     MDBoxLayout:
@@ -330,18 +331,7 @@
 
 MDBoxLayout:
     md_bg_color: app.theme_cls.backgroundColor
-    
-    MDNavigationRail:
-        type: "selected"
-        md_bg_color: app.theme_cls.surfaceContainerLowColor
-        
-        CommonNavigationRailItem:
-            icon: "wifi"
-            screen_to_open: 'sniffer'
-        
-        CommonNavigationRailItem:
-            icon: "package-variant"
-            screen_to_open: 'sender'
+    orientation: "vertical"
 
     MDScreenManager:
         id: screen_manager
@@ -351,3 +341,23 @@ MDBoxLayout:
             name: "info"
         SenderScreen:
             name: "sender"
+
+    MDNavigationBar:
+        md_bg_color: app.theme_cls.surfaceContainerLowColor
+        on_switch_tabs: app.on_tab_switch(*args)
+
+        CommonNavItem:
+            icon: "wifi"
+            text: "Sniffer"
+            screen_name: "sniffer"
+            active: True
+
+        CommonNavItem:
+            icon: "package-variant"
+            text: "Sender"
+            screen_name: "sender"
+
+        CommonNavItem:
+            icon: "door"
+            text: "Scanner"
+            screen_name: "door-scanner"

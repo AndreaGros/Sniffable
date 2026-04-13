@@ -5,7 +5,7 @@ from kivy.lang import Builder
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.behaviors import HoverBehavior
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.navigationrail import MDNavigationRailItem
+from kivymd.uix.navigationbar import MDNavigationItem
 from kivymd.uix.label import MDLabel
 from kivy.clock import Clock
 from kivy.properties import StringProperty, BooleanProperty
@@ -13,10 +13,10 @@ from kivy.properties import StringProperty, BooleanProperty
 from sniffer_logic import Sniffer
 
 
-class CommonNavigationRailItem(MDNavigationRailItem):
-    text = StringProperty()
+class CommonNavItem(MDNavigationItem):
     icon = StringProperty()
-    screen_to_open = StringProperty()
+    text = StringProperty()
+    screen_name = StringProperty()
 
 
 class SnifferScreen(MDScreen):
@@ -126,15 +126,19 @@ class SenderScreen(MDScreen):
 
 
 class NetworkSuiteApp(MDApp):
+
+    def on_tab_switch(self, nav_bar, item, item_icon, item_label):
+        if item.screen_name != "info":
+            self.root.ids.screen_manager.current = item.screen_name
+
     def build(self):
         self.sniffer = None
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Green"
         return Builder.load_file("main.kv")
 
-    def switch_screen(self, nameScreen):
-        # Il nome della screen deve corrispondere al 'name' nel manager
-        self.root.ids.screen_manager.current = nameScreen
+    def switch_screen(self, name):
+        self.root.ids.screen_manager.current = name
 
 
 if __name__ == "__main__":
