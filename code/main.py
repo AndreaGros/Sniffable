@@ -115,10 +115,48 @@ class PacketRow(MDBoxLayout, HoverBehavior):
 class InfoPacketScreen(MDScreen):
     def load_packet(self, index):
         self.ids.layer_container.clear_widgets()
-        lbl = MDLabel(text=index)
-        self.ids.layer_container.add_widget(lbl)
         app = MDApp.get_running_app()
-        print(app.sniffer.selectSinglePacket(index))
+        data = app.sniffer.selectSinglePacket(index)
+
+        if data is None:
+            return
+
+        # Una sezione per ogni layer
+        sections = {
+            "ETHERNET": ["eth_src", "eth_dst"],
+            "IP":       ["ip_src", "ip_dst", "ip_ttl", "ip_proto"],
+            "TCP":      ["tcp_sport", "tcp_dport", "tcp_flags", "tcp_seq"],
+            "UDP":      ["udp_sport", "udp_dport", "udp_len"],
+            "RAW":      ["raw_hex", "raw_text"],
+        }
+
+        for section, keys in sections.items():
+            # Controlla se almeno una chiave esiste nel risultato
+            if not any(k in data for k in keys):
+                continue
+
+            # Titolo sezione
+            self.ids.layer_container.add_widget(
+                MDLabel(
+                    text=f"[ {section} ]",
+                    adaptive_height=True,
+                    bold=True,
+                    theme_text_color="Custom",
+                    text_color="#00FF41",
+                )
+            )
+
+            # Righe chiave: valore
+            for k in keys:
+                if k in data:
+                    self.ids.layer_container.add_widget(
+                        MDLabel(
+                            text=f"  {k.split('_', 1)[1].upper():<12} {data[k]}",
+                            adaptive_height=True,
+                            theme_text_color="Custom",
+                            text_color="#D4F5D4",
+                        )
+                    )
 
 
 class SenderScreen(MDScreen):

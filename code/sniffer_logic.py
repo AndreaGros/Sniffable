@@ -59,10 +59,44 @@ class Sniffer:
             self.packets[str(self.index)] = pkt
 
     def selectSinglePacket(self, index):
-        # dizionario per non passare scapy nel main
-        result = {}
         pkt = self.packets[str(index)]
-        while pkt:
-            print(f"Layer trovato: {pkt.name}")
-        print(pkt.layers)
-        return self.packets[str(index)]
+        result = {}
+
+        # Informazioni generali
+        result["layers"] = [layer.name for layer in pkt.layers()]
+        result["length"] = len(pkt)
+        result["time"] = str(pkt.time)
+
+        # Layer Ethernet
+        if pkt.haslayer("Ether"):
+            result["eth_src"] = pkt["Ether"].src
+            result["eth_dst"] = pkt["Ether"].dst
+
+        # Layer IP
+        if pkt.haslayer("IP"):
+            result["ip_src"] = pkt["IP"].src
+            result["ip_dst"] = pkt["IP"].dst
+            result["ip_ttl"] = pkt["IP"].ttl
+            result["ip_proto"] = pkt["IP"].proto
+
+        # Layer TCP
+        if pkt.haslayer("TCP"):
+            result["tcp_sport"] = pkt["TCP"].sport
+            result["tcp_dport"] = pkt["TCP"].dport
+            result["tcp_flags"] = str(pkt["TCP"].flags)
+            result["tcp_seq"] = pkt["TCP"].seq
+
+        # Layer UDP
+        if pkt.haslayer("UDP"):
+            result["udp_sport"] = pkt["UDP"].sport
+            result["udp_dport"] = pkt["UDP"].dport
+            result["udp_len"] = pkt["UDP"].len
+
+        # Payload grezzo (se presente)
+        if pkt.haslayer("Raw"):
+            raw = pkt["Raw"].load
+            result["raw_hex"] = raw.hex()
+            result["raw_text"] = raw.decode("utf-8", errors="replace")
+
+        print(result)
+        return result
