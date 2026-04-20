@@ -11,13 +11,13 @@ class Sender:
     def createPacket(self, params):
         print(params)
         if "eth" in params:
-            self.layers.append(Ether())
+            self.layers.append(Ether(dst=params.eth.dst))
 
         if "ip" in params:
-            self.layers.append(IP())
+            self.layers.append(IP(dst=params["ip"]["dst"]))
 
         if "tcp" in params:
-            self.layers.append(TCP())
+            self.layers.append(TCP(dport=params.tcp.dport, flags=params.tcp.flags))
 
         if "udp" in params:
             self.layers.append(UDP())
@@ -26,10 +26,11 @@ class Sender:
         pkt = self.layers[0]
         for layer in self.layers[1:]:
             pkt = pkt / layer
-        sendp(pkt)
 
 
-layers = {"eth": {}, "ip": {}}
+layers = {"ip": {
+    "dst":"8.8.8.8"
+}}
 
 s = Sender()
 
