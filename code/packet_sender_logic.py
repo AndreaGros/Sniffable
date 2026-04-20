@@ -42,7 +42,7 @@ class Sender:
         self.layers.append(UDP(**kwargs))
         return self
 
-    def add_payload(self, payload: str | bytes):
+    def add_payload(self, data: str | bytes):
         if isinstance(data, str):
             data = data.encode()
         self.layers.append(Raw(load=data))
@@ -58,15 +58,8 @@ class Sender:
                 pkt = pkt / layer
         return pkt
 
+    
+
     def send(self, pkt):
         if pkt:
             sendp(pkt)
-
-
-s = Sender()
-
-s.add_ether()
-s.add_ip()
-pkt = s.build_packet()
-
-s.send(pkt)
