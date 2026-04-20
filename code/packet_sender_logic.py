@@ -1,37 +1,72 @@
-from scapy.all import sendp
+from scapy.all import Raw, sendp
 from scapy.layers.inet import Ether, IP, ICMP, TCP, UDP
 
 
 class Sender:
-    layers = []
 
-    def __init__(self):
-        print("init")
+    def __init__(self, iface: str = None):
+        self.iface = iface
+        self.layers = []
 
-    def createPacket(self, params):
-        print(params)
-        if "eth" in params:
-            self.layers.append(Ether(dst=params.eth.dst))
+    def reset(self):
+        self.layers = []
+        return self
 
-        if "ip" in params:
-            self.layers.append(IP(dst=params["ip"]["dst"]))
+    def add_ether(self, dst="ff:ff:ff:ff:ff:ff", src=None):
+        kwargs = {"dst": dst}
+        if src:
+            kwargs["src"] = src
+        self.layers.append(Ether(**kwargs))
+        return self
 
-        if "tcp" in params:
-            self.layers.append(TCP(dport=params.tcp.dport, flags=params.tcp.flags))
+    def add_ip(self, dst="127.0.0.1", src=None, ttl=64):
+        kwargs = {"dst": dst, "ttl": ttl}
+        if src:
+            kwargs["src"] = src
+        self.layers.append(IP(**kwargs))
+        return self
 
-        if "udp" in params:
-            self.layers.append(UDP())
+    def add_tcp(self, dport=80, sport=None, flags="S", seq=None):
+        kwargs = {"dport": dport, "flags": flags}
+        if sport:
+            kwargs["sport"] = sport
+        if seq is not None:
+            kwargs["seq"] = seq
+        self.layers.append(TCP(**kwargs))
+        return self
 
-        print(self.layers)
-        pkt = self.layers[0]
-        for layer in self.layers[1:]:
-            pkt = pkt / layer
+    def add_udp(self, dport=80, sport=None):
+        kwargs = {"dport": dport}
+        if sport:
+            kwargs["sport"] = sport
+        self.layers.append(UDP(**kwargs))
+        return self
 
+    def add_payload(self, payload: str | bytes):
+        if isinstance(data, str):
+            data = data.encode()
+        self.layers.append(Raw(load=data))
+        return self
 
-layers = {"ip": {
-    "dst":"8.8.8.8"
-}}
+    def build_packet(self):
+        if len(self.layers) == 0:
+            print("Layers not found")
+        else:
+            print(self.layers)
+            pkt = self.layers[0]
+            for layer in self.layers[1:]:
+                pkt = pkt / layer
+        return pkt
+
+    def send(self, pkt):
+        if pkt:
+            sendp(pkt)
+
 
 s = Sender()
 
-s.createPacket(params=layers)
+s.add_ether()
+s.add_ip()
+pkt = s.build_packet()
+
+s.send(pkt)
