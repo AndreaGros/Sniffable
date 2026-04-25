@@ -26,7 +26,7 @@ class Scanner:
             devices.append(device)
             print(f"IP: {device['ip']:<20} MAC: {device['mac']}")
         
-        print(f"\Found {len(devices)} devices")
+        print(f"Found {len(devices)} devices")
         return devices
 
     def ping(self, target = "127.0.0.1", nPkt=1):
@@ -37,4 +37,4 @@ class Scanner:
 
 scan = Scanner()
 
-scan.device_scan("192.168.1.1/24")
+scan.device_scan("10.65.91.112/8")

@@ -1,0 +1,121 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Sniffable</title>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="navbar">
+        <span class="navbar-brand">NET<span class="text-cyan">OPS</span>_CORE</span>
+        <div style="font-size:11px;color:var(--g4)">
+            NODE: RPI-01 · <span class="text-success">ACTIVE</span>
+        </div>
+    </div>
+
+    <div class="container-fluid px-2 pt-2">
+
+        <!-- STATUS BAR -->
+        <div class="card mb-2 p-2">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="stat-label">THROUGHPUT</div>
+                    <div class="stat-val text-success">1.2 MB/s</div>
+                </div>
+                <div>
+                    <div class="stat-label">LATENCY</div>
+                    <div class="stat-val text-warning">32 ms</div>
+                </div>
+                <div>
+                    <div class="stat-label">ERROR RATE</div>
+                    <div class="stat-val text-danger">0.02%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="row g-2">
+
+            <!-- LEFT: TERMINAL -->
+            <div class="col-12">
+                <div class="section-div">// LIVE STREAM</div>
+                <div class="terminal">
+                    <div><span class="log-ts">[14:41:02]</span> INIT CAPTURE eth0</div>
+                    <div class="log-info"><span class="log-ts">[14:41:04]</span> Listening...</div>
+                    <div class="log-success"><span class="log-ts">[14:41:05]</span> TCP SYN → 192.168.1.1</div>
+                    <div class="log-warn"><span class="log-ts">[14:41:06]</span> High traffic detected</div>
+                    <div class="log-info"><span class="log-ts">[14:41:07]</span> DNS query: api.github.com</div>
+                    <div class="log-err"><span class="log-ts">[14:41:09]</span> Packet loss spike</div>
+                    <div class="blink">_</div>
+                </div>
+            </div>
+
+            <!-- PROTOCOL MATRIX -->
+            <div class="col-12">
+                <div class="section-div">// PROTOCOL MATRIX</div>
+
+                <div class="d-flex flex-wrap gap-1">
+                    <span class="badge badge-tcp">TCP 61%</span>
+                    <span class="badge badge-udp">UDP 22%</span>
+                    <span class="badge badge-http">HTTP 9%</span>
+                    <span class="badge badge-dns">DNS 5%</span>
+                    <span class="badge badge-icmp">ICMP 3%</span>
+                </div>
+            </div>
+
+            <!-- QUICK ACTIONS -->
+            <div class="col-12">
+                <div class="section-div">// CONTROL</div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <button class="btn btn-hacker-primary w-100">▶ START</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-hacker-danger w-100">⏹ STOP</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-hacker w-100">⌫ RESET</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-hacker-cyan w-100">EXPORT</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MINI DEVICE LIST -->
+            <div class="col-12">
+                <div class="section-div">// ACTIVE NODES</div>
+
+                <div class="device-item d-flex align-items-center gap-2 mb-1">
+                    <div class="device-dot pulse" style="background:var(--g5)"></div>
+                    <div class="flex-grow-1">
+                        <div style="color:var(--g5)">192.168.1.1</div>
+                        <div style="color:var(--dim);font-size:10px">Gateway</div>
+                    </div>
+                    <div style="font-size:11px;color:var(--g4)">52ms</div>
+                </div>
+
+                <div class="device-item d-flex align-items-center gap-2 mb-1">
+                    <div class="device-dot pulse" style="background:var(--g5)"></div>
+                    <div class="flex-grow-1">
+                        <div style="color:var(--g5)">192.168.1.105</div>
+                        <div style="color:var(--dim);font-size:10px">Raspberry Pi</div>
+                    </div>
+                    <div style="font-size:11px;color:var(--g4)">28ms</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+
+</html>
