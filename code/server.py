@@ -1,0 +1,66 @@
+import asyncio
+import json
+from websockets.asyncio.server import serve
+from sniffer_logic import Sniffer
+
+PORT = 5000
+
+packet_queue = asyncio.Queue(maxsize=1000)
+sniffer = None
+
+
+def server_callback(data, loop):
+    try:
+        loop.call_soon_threadsafe(packet_queue.put_nowait, data)
+    except asyncio.QueueFull:
+        pass  # drop packet se troppo traffico
+
+async def packet_stream(websocket):
+    while True:
+        packet = await packet_queue.get()
+
+        await websocket.send(json.dumps({"type": "packet", "data": packet}))
+
+
+
+async def handler(websocket):
+    stream_task = asyncio.create_task(packet_stream(websocket))
+
+    try:
+        async for message in websocket:
+            data = json.loads(message)
+
+            action = data.get("action")
+
+            if action == "start_sniffer":
+                sniffer.start()
+                await websocket.send(
+                    json.dumps({"type": "status", "data": "sniffer_started"})
+                )
+
+            elif action == "stop_sniffer":
+                sniffer.stop()
+                await websocket.send(
+                    json.dumps({"type": "status", "data": "sniffer_stopped"})
+                )
+
+    finally:
+        stream_task.cancel()
+        sniffer.stop()
+
+
+async def main():
+    global sniffer
+
+    loop = asyncio.get_running_loop()
+
+    sniffer = Sniffer(on_packet=lambda data: server_callback(data, loop))
+
+    print(f"Server avviato su localhost:{PORT}")
+
+    async with serve(handler, "localhost", PORT):
+        await asyncio.Future()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
