@@ -28,6 +28,7 @@ class Sniffer:
     def stop(self):
         if self._sniffer and self._sniffer.running:
             self._sniffer.stop()
+            print("Stop sniffer")
 
     def callbackPacket(self, pkt):
         if not pkt.haslayer(IP):
