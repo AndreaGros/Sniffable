@@ -9,8 +9,9 @@ let protos = {
     "icmp": 0
 }
 let isSniffing = false
+let LAN = "0.0.0.0"
 
-packetTotal=document.getElementById("packetTotal")
+packetTotal = document.getElementById("packetTotal")
 
 // tasto di sniffer
 startStop = document.getElementById("startStop")
@@ -21,6 +22,35 @@ startStop.addEventListener("click", () => {
     isSniffing = !isSniffing
 })
 
+// tasto clear
+clear = document.getElementById("clear")
+clear.addEventListener("click", () => {
+    socket.send(JSON.stringify({
+        action: "clear"
+    }))
+    protos = {
+        "tcp": 0,
+        "udp": 0,
+        "arp": 0,
+        "dns": 0,
+        "icmp": 0
+    }
+    packets = []
+    updateProtoBars()
+    document.querySelector("tbody").innerHTML = ""
+})
+
+// scan
+let targetLAN = document.getElementById("targetLAN")
+let scanBtn = document.getElementById("scanBtn")
+
+scanBtn.addEventListener("click", () => {
+    socket.send(JSON.stringify({
+        action: "get_hosts",
+        target: targetLAN.value
+    }))
+    console.log(targetLAN.value)
+})
 
 // socket
 socket.addEventListener("open", () => {
@@ -29,6 +59,7 @@ socket.addEventListener("open", () => {
 socket.addEventListener("close", () => {
     console.log("Close socket")
 })
+
 socket.onmessage = (event) => {
     const msg = JSON.parse(event.data)
     console.log(msg)
@@ -45,6 +76,10 @@ socket.onmessage = (event) => {
         })
         updateProtoBars()
         packetTotal.textContent = packets.length
+        addPacketRow(msg.data)
+    }
+    else if (msg.type === "devices") {
+        renderDevices(msg.data)
     }
 }
 
@@ -62,4 +97,60 @@ function updateProtoBars() {
         bar.style.width = `${percentage}%`
         pct.textContent = `${percentage}%`
     })
+}
+
+function addPacketRow(packet) {
+    console.log(packet)
+    const tbody = document.querySelector("tbody")
+
+    const row = document.createElement("tr")
+
+    row.setAttribute("data-bs-toggle", "modal")
+    row.setAttribute("data-bs-target", "#pktModal")
+
+    // protocollo
+    const proto = (packet.proto || "unknown").toLowerCase()
+
+    // orario realtime
+    const now = new Date()
+
+    const time =
+        now.toLocaleTimeString("it-IT", {
+            hour12: false
+        }) +
+        "." +
+        String(now.getMilliseconds()).padStart(3, "0")
+
+    row.innerHTML = `
+        <td class="text-g1">
+            ${packet.index || "-"}
+        </td>
+
+        <td class="text-g1">
+            ${time}
+        </td>
+
+        <td style="color:var(--g3)">
+            ${packet.src || "-"}
+        </td>
+
+        <td>
+            ${packet.dst || "-"}
+        </td>
+
+        <td>
+            <span class="proto proto-${proto}">
+                ${(packet.proto || "UNK").toUpperCase()}
+            </span>
+        </td>
+
+        <td class="text-g1">
+            ${packet.length || "-"}
+        </td>
+    `
+    tbody.appendChild(row)
+}
+
+function renderDevices(devices) {
+
 }

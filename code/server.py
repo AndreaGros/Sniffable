@@ -2,6 +2,7 @@ import asyncio
 import json
 from websockets.asyncio.server import serve
 from sniffer_logic import Sniffer
+from port_scanner_logic import Scanner
 
 PORT = 5000
 
@@ -40,9 +41,23 @@ async def handler(websocket):
 
             elif action == "stop_sniffer":
                 sniffer.stop()
-                await websocket.send(
-                    json.dumps({"type": "status", "data": "sniffer_stopped"})
+                await websocket.send(json.dumps({"type": "status", "data": "sniffer_stopped"}))
+
+            elif action == "clear_packets":
+                sniffer.packets = {}
+                sniffer.index = 0
+                await websocket.send(json.dumps({"type": "status", "data": "cleared"}))
+
+            elif action == "get_hosts":
+                await websocket.send(json.dumps({"type": "status", "data": "scan_started"}))
+                loop = asyncio.get_running_loop()
+                devices = await loop.run_in_executor(
+                    None,
+                    scanner.device_scan,
+                    data.get("target", data.get("target"))
                 )
+                print("target: ", data.get("target"))
+                await websocket.send(json.dumps({"type": "devices", "data": devices}))
 
     finally:
         stream_task.cancel()
@@ -51,10 +66,12 @@ async def handler(websocket):
 
 async def main():
     global sniffer
+    global scanner
 
     loop = asyncio.get_running_loop()
 
     sniffer = Sniffer(on_packet=lambda data: server_callback(data, loop))
+    scanner = Scanner()
 
     print(f"Server avviato su localhost:{PORT}")
 

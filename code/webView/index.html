@@ -68,7 +68,7 @@
           </button>
         </div>
         <div class="col-4">
-          <button class="hk-btn hk-btn-default w-100">
+          <button class="hk-btn hk-btn-default w-100" id="clear">
             <i class="bi bi-trash me-1"></i>CLEAR
           </button>
         </div>
@@ -192,70 +192,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr data-bs-toggle="modal" data-bs-target="#pktModal">
-              <td class="text-g1">218441</td>
-              <td class="text-g1">14:32:07.441</td>
-              <td style="color:var(--g3)">192.168.1.105</td>
-              <td>142.250.74.46</td>
-              <td><span class="proto proto-tcp">TCP</span></td>
-              <td class="text-g1">1460</td>
-            </tr>
-            <tr data-bs-toggle="modal" data-bs-target="#pktModal">
-              <td class="text-g1">218440</td>
-              <td class="text-g1">14:32:07.438</td>
-              <td style="color:var(--g3)">192.168.1.1</td>
-              <td>255.255.255.255</td>
-              <td><span class="proto proto-arp">ARP</span></td>
-              <td class="text-g1">60</td>
-            </tr>
-            <tr data-bs-toggle="modal" data-bs-target="#pktModal">
-              <td class="text-g1">218439</td>
-              <td class="text-g1">14:32:07.421</td>
-              <td style="color:var(--g3)">8.8.8.8</td>
-              <td>192.168.1.105</td>
-              <td><span class="proto proto-dns">DNS</span></td>
-              <td class="text-g1">124</td>
-            </tr>
-            <tr data-bs-toggle="modal" data-bs-target="#pktModal">
-              <td class="text-g1">218438</td>
-              <td class="text-g1">14:32:07.398</td>
-              <td style="color:var(--g3)">10.0.0.14</td>
-              <td>192.168.1.105</td>
-              <td><span class="proto proto-udp">UDP</span></td>
-              <td class="text-g1">512</td>
-            </tr>
-            <tr data-bs-toggle="modal" data-bs-target="#pktModal">
-              <td class="text-g1">218437</td>
-              <td class="text-g1">14:32:07.371</td>
-              <td style="color:var(--g3)">192.168.1.105</td>
-              <td>8.8.8.8</td>
-              <td><span class="proto proto-icmp">ICMP</span></td>
-              <td class="text-g1">84</td>
-            </tr>
-            <tr data-bs-toggle="modal" data-bs-target="#pktModal">
-              <td class="text-g1">218436</td>
-              <td class="text-g1">14:32:07.350</td>
-              <td style="color:var(--g3)">172.16.0.22</td>
-              <td>192.168.1.105</td>
-              <td><span class="proto proto-tcp">TCP</span></td>
-              <td class="text-g1">892</td>
-            </tr>
-            <tr data-bs-toggle="modal" data-bs-target="#pktModal">
-              <td class="text-g1">218435</td>
-              <td class="text-g1">14:32:07.310</td>
-              <td style="color:var(--g3)">192.168.1.200</td>
-              <td>192.168.1.105</td>
-              <td><span class="proto proto-http">HTTP</span></td>
-              <td class="text-g1">344</td>
-            </tr>
-            <tr data-bs-toggle="modal" data-bs-target="#pktModal">
-              <td class="text-g1">218434</td>
-              <td class="text-g1">14:32:07.290</td>
-              <td style="color:var(--g3)">192.168.1.105</td>
-              <td>10.0.0.14</td>
-              <td><span class="proto proto-tcp">TCP</span></td>
-              <td class="text-g1">74</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -267,7 +203,7 @@
 
       <div class="row g-2 mb-3">
         <div class="col-9">
-          <button class="hk-btn hk-btn-primary w-100">
+          <button class="hk-btn hk-btn-primary w-100" id="scanBtn">
             <i class="bi bi-arrow-repeat me-1"></i>SCAN LAN
           </button>
         </div>
@@ -564,7 +500,7 @@
         <div class="modal-body">
           <div class="mb-3">
             <label class="hk-label">TARGET CIDR</label>
-            <input class="hk-input" type="text" value="192.168.1.0/24">
+            <input class="hk-input" type="text" value="192.168.1.0/24" id="targetLAN">
           </div>
           <div class="row g-2">
             <div class="col-6">

@@ -32,9 +32,3 @@ class Scanner:
     def ping(self, target = "127.0.0.1", nPkt=1):
         ans, unans = sr(IP(dst=target)/ICMP(), timeout=3)
         ans.summary(lambda s,r: r.sprintf("%IP.src% is alive") )
-
-    
-
-scan = Scanner()
-
-scan.device_scan("10.65.91.112/8")
