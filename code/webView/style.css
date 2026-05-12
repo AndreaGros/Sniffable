@@ -28,16 +28,15 @@
 
 html {
   height: 100%;
-  zoom: 2;
 }
 
 body {
   font-family: var(--mono);
   background: var(--bg);
   color: var(--g3);
-  height: calc(100% / 2);
   font-size: 13px;
   overflow-x: hidden;
+  font-size: 200%;
 }
 
 /* ── CRT EFFECTS ── */
@@ -95,6 +94,7 @@ body::after {
 /* ── NAVBAR ── */
 .topbar {
   position: sticky;
+  left: 0;
   top: 0;
   z-index: 200;
   background: var(--bg1);

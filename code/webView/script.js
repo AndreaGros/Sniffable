@@ -80,6 +80,7 @@ socket.onmessage = (event) => {
     }
     else if (msg.type === "devices") {
         renderDevices(msg.data)
+        console.log("device renderizzati")
     }
 }
 
@@ -153,4 +154,43 @@ function addPacketRow(packet) {
 
 function renderDevices(devices) {
 
+    const container = document.querySelector("#page-devices")
+
+    // rimuove solo i device vecchi
+    container.querySelectorAll(".dev-item").forEach(el => el.remove())
+
+    devices.forEach(dev => {
+
+        const el = document.createElement("div")
+        el.className = "dev-item"
+
+        el.setAttribute("data-bs-toggle", "modal")
+        el.setAttribute("data-bs-target", "#devModal")
+
+        el.innerHTML = `
+            <div class="dev-dot"
+                 style="background:var(--g3);box-shadow:0 0 5px var(--g3)">
+            </div>
+
+            <div class="flex-grow-1">
+                <div style="color:var(--g3);font-size:14px">
+                    ${dev.ip}
+                </div>
+                <div style="color:var(--dim);font-size:10px;margin-top:2px">
+                    ${dev.mac}
+                </div>
+            </div>
+
+            <div class="text-end">
+                <div style="color:var(--g2);font-size:12px">
+                    ●
+                </div>
+                <div style="font-size:9px;color:var(--g3);letter-spacing:1px">
+                    ONLINE
+                </div>
+            </div>
+        `
+
+        container.appendChild(el)
+    })
 }
