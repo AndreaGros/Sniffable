@@ -64,7 +64,14 @@ class Sniffer:
         result = {}
 
         # Informazioni generali
-        result["layers"] = [layer.name for layer in pkt.layers()]
+        layers = []
+        current = pkt
+
+        while current and current.__class__.__name__ != "NoPayload":
+            layers.append(current.__class__.__name__)
+            current = current.payload
+
+        result["layers"] = layers
         result["length"] = len(pkt)
         result["time"] = str(pkt.time)
 
@@ -93,11 +100,10 @@ class Sniffer:
             result["udp_dport"] = pkt["UDP"].dport
             result["udp_len"] = pkt["UDP"].len
 
-        # Payload grezzo (se presente)
+        # Payload grezzo
         if pkt.haslayer("Raw"):
             raw = pkt["Raw"].load
             result["raw_hex"] = raw.hex()
             result["raw_text"] = raw.decode("utf-8", errors="replace")
 
-        print(result)
         return result

@@ -78,6 +78,9 @@ socket.onmessage = (event) => {
         packetTotal.textContent = packets.length
         addPacketRow(msg.data)
     }
+    else if (msg.type === "detail"){
+        console.log(msg.data)
+    }
     else if (msg.type === "devices") {
         renderDevices(msg.data)
         console.log("device renderizzati")
@@ -105,6 +108,13 @@ function addPacketRow(packet) {
     const tbody = document.querySelector("tbody")
 
     const row = document.createElement("tr")
+
+    row.addEventListener("click", () => {
+        socket.send(JSON.stringify({
+            action: "packet_detail",
+            packet_id: packet.index
+        }))
+    })
 
     row.setAttribute("data-bs-toggle", "modal")
     row.setAttribute("data-bs-target", "#pktModal")

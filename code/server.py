@@ -3,6 +3,7 @@ import json
 from websockets.asyncio.server import serve
 from sniffer_logic import Sniffer
 from port_scanner_logic import Scanner
+from packet_sender_logic import Sender
 
 PORT = 5000
 
@@ -48,6 +49,11 @@ async def handler(websocket):
                 sniffer.index = 0
                 await websocket.send(json.dumps({"type": "status", "data": "cleared"}))
 
+            elif action == "packet_detail":
+                pkt = sniffer.selectSinglePacket(data.get("packet_id"))
+                print(pkt)
+                await websocket.send(json.dumps({"type": "detail", "data": pkt}))
+
             elif action == "get_hosts":
                 await websocket.send(json.dumps({"type": "status", "data": "scan_started"}))
                 loop = asyncio.get_running_loop()
@@ -72,6 +78,7 @@ async def main():
 
     sniffer = Sniffer(on_packet=lambda data: server_callback(data, loop))
     scanner = Scanner()
+    sender = Sender()
 
     print(f"Server avviato su localhost:{PORT}")
 
