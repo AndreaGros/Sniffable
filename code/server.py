@@ -60,10 +60,24 @@ async def handler(websocket):
                 devices = await loop.run_in_executor(
                     None,
                     scanner.device_scan,
-                    data.get("target", data.get("target"))
+                    data.get("target")
                 )
                 print("target: ", data.get("target"))
                 await websocket.send(json.dumps({"type": "devices", "data": devices}))
+
+            elif action == "port_scan":
+                target = data.get("target"))
+                startPort = int(data.get("startPort"))
+                endPort = int(data.get("endPort"))
+                loop = asyncio.get_running_loop()
+                ports = await loop.run_in_executor(
+                    None,
+                    scanner.port_scan,
+                    target,
+                    startPort,
+                    endPort
+                )
+                await websocket.send(json.dumps({"type": "ports", "data": ports}))
 
     finally:
         stream_task.cancel()
@@ -73,6 +87,7 @@ async def handler(websocket):
 async def main():
     global sniffer
     global scanner
+    global sender
 
     loop = asyncio.get_running_loop()
 

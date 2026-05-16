@@ -78,12 +78,15 @@ socket.onmessage = (event) => {
         packetTotal.textContent = packets.length
         addPacketRow(msg.data)
     }
-    else if (msg.type === "detail"){
+    else if (msg.type === "detail") {
         console.log(msg.data)
     }
     else if (msg.type === "devices") {
         renderDevices(msg.data)
         console.log("device renderizzati")
+    }
+    else if (msg.type === "ports") {
+        console.log(msg.data)
     }
 }
 
@@ -200,7 +203,14 @@ function renderDevices(devices) {
                 </div>
             </div>
         `
-
+        el.addEventListener("click", () => {
+            socket.send(JSON.stringify({
+                action: "port_scan",
+                target: dev.ip,
+                startPort: 22,
+                endPort: 443
+            }))
+        })
         container.appendChild(el)
     })
 }

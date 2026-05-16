@@ -33,17 +33,19 @@ class Scanner:
     def port_scan(self, target, startPort, endPort):
         open_ports = []
 
-        for x in range(startPort, endPort+1):
+        for x in range(startPort, endPort + 1):
             packet = IP(dst=target) / TCP(dport=x, flags="S")
             response = sr1(packet, timeout=0.5, verbose=0)
-            if response and response.haslayer(TCP):
+
+            if response is None:
+                continue
+
+            if response.haslayer(TCP):
                 if response[TCP].flags == 0x12:
-                    print(f"Port {x} is open!")
+                    print(f"Port {x} OPEN")
                     open_ports.append(x)
-                    send(IP(dst=target)/TCP(dport=x, flags="R"), verbose=0)
+
+                elif response[TCP].flags == 0x14:
+                    print(f"Port {x} CLOSED")
 
         return open_ports
-
-scanner = Scanner()
-
-scanner.port_scan(target="192.168.1.1", startPort=80, endPort=443)
