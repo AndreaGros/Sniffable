@@ -66,7 +66,7 @@ async def handler(websocket):
                 await websocket.send(json.dumps({"type": "devices", "data": devices}))
 
             elif action == "port_scan":
-                target = data.get("target"))
+                target = data.get("target")
                 startPort = int(data.get("startPort"))
                 endPort = int(data.get("endPort"))
                 loop = asyncio.get_running_loop()
