@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=480, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>SNIFFER_PI</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
@@ -12,7 +12,7 @@
   <link href="./style.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="touch-ui">
 
   <!-- TOPBAR -->
   <div class="topbar">
@@ -63,17 +63,17 @@
 
       <div class="row g-2 mb-3">
         <div class="col-5">
-          <button class="hk-btn hk-btn-stop w-100" id="startStop">
+          <button class="btn btn-lg hk-btn hk-btn-stop w-100" id="startStop">
             <i class="bi bi-stop-fill me-1"></i>STOP
           </button>
         </div>
         <div class="col-4">
-          <button class="hk-btn hk-btn-default w-100" id="clear">
+          <button class="btn btn-lg hk-btn hk-btn-default w-100" id="clear">
             <i class="bi bi-trash me-1"></i>CLEAR
           </button>
         </div>
         <div class="col-3">
-          <button class="hk-btn hk-btn-default w-100">
+          <button class="btn btn-lg hk-btn hk-btn-default w-100">
             <i class="bi bi-download"></i>
           </button>
         </div>
@@ -169,18 +169,18 @@
     <div class="page" id="page-packets">
 
       <div class="d-flex flex-wrap gap-2 mb-2">
-        <button class="fbtn active">ALL</button>
-        <button class="fbtn">TCP</button>
-        <button class="fbtn">UDP</button>
-        <button class="fbtn">ARP</button>
-        <button class="fbtn">DNS</button>
-        <button class="fbtn">ICMP</button>
+        <button class="btn fbtn active">ALL</button>
+        <button class="btn fbtn">TCP</button>
+        <button class="btn fbtn">UDP</button>
+        <button class="btn fbtn">ARP</button>
+        <button class="btn fbtn">DNS</button>
+        <button class="btn fbtn">ICMP</button>
       </div>
 
-      <input class="hk-input mb-2" type="text" placeholder="_ filtro BPF: es. host 192.168.1.1 or port 80">
+      <input class="form-control form-control-lg hk-input mb-2" type="text" placeholder="_ filtro BPF: es. host 192.168.1.1 or port 80">
 
-      <div class="hk-table-wrap mb-3">
-        <table class="hk-table">
+      <div class="table-responsive hk-table-wrap mb-3">
+        <table class="table table-sm hk-table">
           <thead>
             <tr>
               <th>#</th>
@@ -203,12 +203,12 @@
 
       <div class="row g-2 mb-3">
         <div class="col-9">
-          <button class="hk-btn hk-btn-primary w-100" id="scanBtn">
+          <button class="btn btn-lg hk-btn hk-btn-primary w-100" id="scanBtn">
             <i class="bi bi-arrow-repeat me-1"></i>SCAN LAN
           </button>
         </div>
         <div class="col-3">
-          <button class="hk-btn hk-btn-default w-100" data-bs-toggle="modal" data-bs-target="#scanCfgModal">
+          <button class="btn btn-lg hk-btn hk-btn-default w-100" data-bs-toggle="modal" data-bs-target="#scanCfgModal">
             <i class="bi bi-gear"></i>
           </button>
         </div>
@@ -303,14 +303,14 @@
             <input class="form-check-input" type="checkbox" checked>
           </div>
         </div>
-        <div class="p-2">
+        <div class="p-3">
           <div class="mb-2">
             <label class="hk-label">DST MAC</label>
-            <input class="hk-input" type="text" value="ff:ff:ff:ff:ff:ff">
+            <input class="form-control form-control-lg hk-input" type="text" value="ff:ff:ff:ff:ff:ff">
           </div>
           <div>
             <label class="hk-label">SRC MAC</label>
-            <input class="hk-input" type="text" placeholder="auto">
+            <input class="form-control form-control-lg hk-input" type="text" placeholder="auto">
           </div>
         </div>
       </div>
@@ -322,20 +322,20 @@
             <input class="form-check-input" type="checkbox" checked>
           </div>
         </div>
-        <div class="p-2">
+        <div class="p-3">
           <div class="row g-2 mb-2">
             <div class="col-8">
               <label class="hk-label">DST IP</label>
-              <input class="hk-input" type="text" value="192.168.1.1">
+              <input class="form-control form-control-lg hk-input" type="text" value="192.168.1.1">
             </div>
             <div class="col-4">
               <label class="hk-label">TTL</label>
-              <input class="hk-input" type="number" value="64">
+              <input class="form-control form-control-lg hk-input" type="number" value="64">
             </div>
           </div>
           <div>
             <label class="hk-label">SRC IP</label>
-            <input class="hk-input" type="text" placeholder="auto">
+            <input class="form-control form-control-lg hk-input" type="text" placeholder="auto">
           </div>
         </div>
       </div>
@@ -343,22 +343,22 @@
       <div class="hk-card mb-2">
         <div class="hk-card-header">
           <span>// TRASPORTO</span>
-          <select class="hk-input" style="width:auto;min-height:26px;padding:2px 8px;font-size:10px">
+          <select class="form-select form-select-lg hk-input w-auto py-1" style="font-size:10px">
             <option>TCP</option>
             <option>UDP</option>
             <option>ICMP</option>
             <option>NONE</option>
           </select>
         </div>
-        <div class="p-2">
+        <div class="p-3">
           <div class="row g-2">
             <div class="col-6">
               <label class="hk-label">DST PORT</label>
-              <input class="hk-input" type="number" value="80">
+              <input class="form-control form-control-lg hk-input" type="number" value="80">
             </div>
             <div class="col-6">
               <label class="hk-label">FLAGS</label>
-              <input class="hk-input" type="text" value="S" placeholder="S/A/SA/R">
+              <input class="form-control form-control-lg hk-input" type="text" value="S" placeholder="S/A/SA/R">
             </div>
           </div>
         </div>
@@ -371,20 +371,20 @@
             <input class="form-check-input" type="checkbox">
           </div>
         </div>
-        <div class="p-2">
-          <textarea class="hk-input" rows="2" placeholder="payload grezzo..."
+        <div class="p-3">
+          <textarea class="form-control form-control-lg hk-input" rows="2" placeholder="payload grezzo..."
             style="resize:none;min-height:70px"></textarea>
         </div>
       </div>
 
       <div class="row g-2">
         <div class="col-8">
-          <button class="hk-btn hk-btn-primary w-100">
+          <button class="btn btn-lg hk-btn hk-btn-primary w-100">
             <i class="bi bi-lightning-fill me-1"></i>INVIA PACCHETTO
           </button>
         </div>
         <div class="col-4">
-          <button class="hk-btn hk-btn-default w-100">× N</button>
+          <button class="btn btn-lg hk-btn hk-btn-default w-100">× N</button>
         </div>
       </div>
 
@@ -396,9 +396,9 @@
       <div class="sdiv">
         <span>// SYSTEM LOG</span>
         <div class="d-flex gap-1">
-          <button class="fbtn active" style="padding:4px 9px;font-size:9px;min-height:28px">ALL</button>
-          <button class="fbtn" style="padding:4px 9px;font-size:9px;min-height:28px">ERR</button>
-          <button class="fbtn" style="padding:4px 9px;font-size:9px;min-height:28px">WARN</button>
+          <button class="btn fbtn active">ALL</button>
+          <button class="btn fbtn">ERR</button>
+          <button class="btn fbtn">WARN</button>
         </div>
       </div>
 
@@ -416,7 +416,7 @@
         <div class="log-err"><span class="log-ts">[14:32:01]</span>Permessi insufficienti su wlan0</div>
       </div>
 
-      <button class="hk-btn hk-btn-default w-100">
+      <button class="btn btn-lg hk-btn hk-btn-default w-100">
         <i class="bi bi-trash me-1"></i>CLEAR LOG
       </button>
 
@@ -435,7 +435,7 @@
 
   <!-- MODAL: Packet detail -->
   <div class="modal fade" id="pktModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">PKT_218441</h5>
@@ -456,7 +456,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="hk-btn hk-btn-default w-100" data-bs-dismiss="modal">[ CHIUDI ]</button>
+          <button class="btn btn-lg hk-btn hk-btn-default w-100" data-bs-dismiss="modal">[ CHIUDI ]</button>
         </div>
       </div>
     </div>
@@ -464,7 +464,7 @@
 
   <!-- MODAL: Device detail -->
   <div class="modal fade" id="devModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">HOST_INFO</h5>
@@ -483,7 +483,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="hk-btn hk-btn-default w-100" data-bs-dismiss="modal">[ CHIUDI ]</button>
+          <button class="btn btn-lg hk-btn hk-btn-default w-100" data-bs-dismiss="modal">[ CHIUDI ]</button>
         </div>
       </div>
     </div>
@@ -491,7 +491,7 @@
 
   <!-- MODAL: Scan config -->
   <div class="modal fade" id="scanCfgModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">SCAN_CFG</h5>
@@ -500,16 +500,16 @@
         <div class="modal-body">
           <div class="mb-3">
             <label class="hk-label">TARGET CIDR</label>
-            <input class="hk-input" type="text" value="192.168.1.0/24" id="targetLAN">
+            <input class="form-control form-control-lg hk-input" type="text" value="192.168.1.0/24" id="targetLAN">
           </div>
           <div class="row g-2">
             <div class="col-6">
               <label class="hk-label">TIMEOUT (s)</label>
-              <input class="hk-input" type="number" value="0.5" step="0.1">
+              <input class="form-control form-control-lg hk-input" type="number" value="0.5" step="0.1">
             </div>
             <div class="col-6">
               <label class="hk-label">IFACE</label>
-              <select class="hk-input">
+              <select class="form-select form-select-lg hk-input">
                 <option>eth0</option>
                 <option>wlan0</option>
               </select>
@@ -517,7 +517,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="hk-btn hk-btn-primary w-100" data-bs-dismiss="modal">[ SALVA ]</button>
+          <button class="btn btn-lg hk-btn hk-btn-primary w-100" data-bs-dismiss="modal">[ SALVA ]</button>
         </div>
       </div>
     </div>

@@ -845,3 +845,280 @@ body::after {
   transition:
     width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* Touch layout: 5" Raspberry/Electron display */
+:root {
+  --topbar-h: 60px;
+  --bottomnav-h: 76px;
+  --sidebar-w: 150px;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  font-size: 16px;
+}
+
+.topbar {
+  height: var(--topbar-h);
+  padding: 0 16px;
+}
+
+.topbar-brand {
+  font-size: clamp(30px, 8vw, 42px);
+  letter-spacing: 3px;
+}
+
+.topbar-right {
+  gap: 16px;
+  font-size: 13px;
+}
+
+.topbar-iface,
+#cap-status {
+  font-size: 12px !important;
+}
+
+#clock {
+  font-size: 13px !important;
+}
+
+.status-dot {
+  width: 11px;
+  height: 11px;
+}
+
+.sidebar {
+  top: var(--topbar-h);
+  width: var(--sidebar-w);
+}
+
+.sitem {
+  min-height: 58px;
+  padding: 14px 16px;
+  font-size: 13px;
+}
+
+.sitem i {
+  font-size: 19px;
+}
+
+.bottomnav {
+  min-height: var(--bottomnav-h);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bitem {
+  min-height: var(--bottomnav-h);
+  padding: 8px 2px;
+  font-size: 11px;
+}
+
+.bitem i {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.content {
+  min-height: calc(100vh - var(--topbar-h));
+  padding-bottom: calc(var(--bottomnav-h) + 10px);
+}
+
+.page {
+  min-height: calc(100vh - var(--topbar-h) - var(--bottomnav-h) - 10px);
+  padding: 16px;
+}
+
+#page-capture.page.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+.sdiv {
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.hk-card-header {
+  padding: 10px 14px;
+  font-size: 12px;
+}
+
+.hk-card .p-2 {
+  padding: 0.75rem !important;
+}
+
+.stat-box {
+  min-height: 118px;
+  padding: 15px 10px;
+}
+
+.stat-label {
+  font-size: 12px;
+}
+
+.stat-val {
+  font-size: clamp(44px, 14vw, 70px);
+}
+
+.stat-sub {
+  font-size: 13px;
+}
+
+.hk-btn {
+  min-height: 56px;
+  font-size: 15px !important;
+}
+
+.fbtn {
+  min-height: 46px;
+  padding: 10px 13px;
+  font-size: 13px;
+}
+
+.hk-input {
+  min-height: 52px;
+  padding: 11px 12px;
+  font-size: 15px !important;
+}
+
+.hk-label {
+  font-size: 12px;
+}
+
+.form-check-input {
+  width: 46px !important;
+  height: 26px !important;
+}
+
+.proto {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.hk-progress {
+  height: 15px;
+}
+
+.proto-bar-row {
+  min-height: 38px;
+  gap: 10px;
+  margin-bottom: 9px;
+}
+
+.proto-bar-name {
+  width: 52px;
+  font-size: 14px;
+}
+
+.proto-bar-pct {
+  width: 48px;
+  font-size: 14px;
+}
+
+.hk-table-wrap {
+  max-height: calc(100vh - var(--topbar-h) - var(--bottomnav-h) - 135px);
+}
+
+.hk-table {
+  font-size: 13px;
+}
+
+.hk-table th {
+  padding: 10px 9px;
+  font-size: 11px;
+}
+
+.hk-table td {
+  padding: 10px 9px;
+}
+
+.dev-item {
+  min-height: 74px;
+  margin-bottom: 9px;
+  padding: 14px 13px;
+}
+
+.dev-dot {
+  width: 12px;
+  height: 12px;
+}
+
+.dev-item [style*="font-size:14px"] {
+  font-size: 16px !important;
+}
+
+.dev-item [style*="font-size:12px"] {
+  font-size: 14px !important;
+}
+
+.dev-item [style*="font-size:10px"],
+.dev-item [style*="font-size:9px"] {
+  font-size: 12px !important;
+}
+
+.terminal {
+  height: calc(100vh - var(--topbar-h) - var(--bottomnav-h) - 145px);
+  padding: 12px 14px;
+  font-size: 13px;
+}
+
+.modal-title {
+  font-size: 28px;
+}
+
+.modal-body {
+  font-size: 14px;
+}
+
+.modal-key {
+  width: 105px;
+  font-size: 12px;
+}
+
+.modal-hex {
+  font-size: 12px;
+}
+
+@media (min-width: 768px) {
+  .content {
+    margin-left: var(--sidebar-w);
+    padding-bottom: 0;
+  }
+
+  .page {
+    min-height: calc(100vh - var(--topbar-h));
+    padding: 22px 24px;
+  }
+
+  .terminal {
+    height: calc(100vh - var(--topbar-h) - 140px);
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --topbar-h: 56px;
+    --bottomnav-h: 70px;
+  }
+
+  .topbar-brand {
+    font-size: 28px;
+    letter-spacing: 2px;
+  }
+
+  .topbar-right {
+    gap: 8px;
+  }
+
+  .page {
+    padding: 12px;
+  }
+
+  .hk-btn {
+    font-size: 13px !important;
+  }
+}
