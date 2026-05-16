@@ -848,277 +848,194 @@ body::after {
 
 /* Touch layout: 5" Raspberry/Electron display */
 :root {
-  --topbar-h: 60px;
-  --bottomnav-h: 76px;
-  --sidebar-w: 150px;
+  --ui-scale: 1.22;
+  --topbar-h: calc(58px * var(--ui-scale));
+  --bottomnav-h: calc(72px * var(--ui-scale));
+  --sidebar-w: calc(128px * var(--ui-scale));
 }
 
-body {
+body.touch-ui {
   min-height: 100%;
   margin: 0;
-  font-size: 16px;
+  font-size: calc(14px * var(--ui-scale));
 }
 
-.topbar {
+.touch-ui .topbar {
   height: var(--topbar-h);
-  padding: 0 16px;
+  padding-inline: calc(12px * var(--ui-scale));
 }
 
-.topbar-brand {
-  font-size: clamp(30px, 8vw, 42px);
+.touch-ui .topbar-brand {
+  font-size: clamp(32px, 9vw, calc(38px * var(--ui-scale)));
   letter-spacing: 3px;
 }
 
-.topbar-right {
-  gap: 16px;
-  font-size: 13px;
+.touch-ui .topbar-right {
+  gap: calc(10px * var(--ui-scale));
+  font-size: calc(10px * var(--ui-scale));
 }
 
-.topbar-iface,
-#cap-status {
-  font-size: 12px !important;
+.touch-ui #cap-status,
+.touch-ui #clock,
+.touch-ui .topbar-iface {
+  font-size: calc(10px * var(--ui-scale)) !important;
 }
 
-#clock {
-  font-size: 13px !important;
+.touch-ui .status-dot {
+  width: calc(8px * var(--ui-scale));
+  height: calc(8px * var(--ui-scale));
 }
 
-.status-dot {
-  width: 11px;
-  height: 11px;
-}
-
-.sidebar {
+.touch-ui .sidebar {
   top: var(--topbar-h);
   width: var(--sidebar-w);
 }
 
-.sitem {
-  min-height: 58px;
-  padding: 14px 16px;
-  font-size: 13px;
+.touch-ui .sitem {
+  min-height: calc(48px * var(--ui-scale));
+  padding: calc(10px * var(--ui-scale));
+  font-size: calc(10px * var(--ui-scale));
 }
 
-.sitem i {
-  font-size: 19px;
+.touch-ui .sitem i {
+  font-size: calc(15px * var(--ui-scale));
 }
 
-.bottomnav {
+.touch-ui .bottomnav {
   min-height: var(--bottomnav-h);
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-.bitem {
+.touch-ui .bitem {
   min-height: var(--bottomnav-h);
-  padding: 8px 2px;
-  font-size: 11px;
+  padding: calc(6px * var(--ui-scale)) 2px;
+  font-size: calc(9px * var(--ui-scale));
 }
 
-.bitem i {
-  font-size: 24px;
-  margin-bottom: 4px;
+.touch-ui .bitem i {
+  font-size: calc(20px * var(--ui-scale));
 }
 
-.content {
+.touch-ui .content {
   min-height: calc(100vh - var(--topbar-h));
   padding-bottom: calc(var(--bottomnav-h) + 10px);
 }
 
-.page {
+.touch-ui .page {
   min-height: calc(100vh - var(--topbar-h) - var(--bottomnav-h) - 10px);
-  padding: 16px;
+  padding: calc(12px * var(--ui-scale));
 }
 
-#page-capture.page.active {
+.touch-ui #page-capture.page.active {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  gap: 10px;
+  gap: calc(8px * var(--ui-scale));
 }
 
-.sdiv {
-  padding-bottom: 8px;
-  margin-bottom: 12px;
-  font-size: 12px;
+.touch-ui .stat-box {
+  min-height: calc(96px * var(--ui-scale));
+  padding: calc(12px * var(--ui-scale)) 10px;
 }
 
-.hk-card-header {
-  padding: 10px 14px;
-  font-size: 12px;
+.touch-ui .stat-label,
+.touch-ui .stat-sub,
+.touch-ui .sdiv,
+.touch-ui .hk-label,
+.touch-ui .hk-card-header,
+.touch-ui .proto,
+.touch-ui .fbtn,
+.touch-ui .modal-key,
+.touch-ui .modal-hex {
+  font-size: calc(10px * var(--ui-scale));
 }
 
-.hk-card .p-2 {
-  padding: 0.75rem !important;
+.touch-ui .stat-val {
+  font-size: clamp(52px, 15vw, calc(58px * var(--ui-scale)));
 }
 
-.stat-box {
-  min-height: 118px;
-  padding: 15px 10px;
+.touch-ui .hk-btn,
+.touch-ui .hk-input {
+  font-size: calc(12px * var(--ui-scale)) !important;
+  min-height: calc(46px * var(--ui-scale));
 }
 
-.stat-label {
-  font-size: 12px;
+.touch-ui .fbtn {
+  min-height: calc(38px * var(--ui-scale));
 }
 
-.stat-val {
-  font-size: clamp(44px, 14vw, 70px);
+.touch-ui .form-check-input {
+  width: calc(38px * var(--ui-scale)) !important;
+  height: calc(22px * var(--ui-scale)) !important;
 }
 
-.stat-sub {
-  font-size: 13px;
+.touch-ui .hk-progress {
+  height: calc(12px * var(--ui-scale));
 }
 
-.hk-btn {
-  min-height: 56px;
-  font-size: 15px !important;
+.touch-ui .proto-bar-row {
+  min-height: calc(32px * var(--ui-scale));
+  gap: calc(8px * var(--ui-scale));
 }
 
-.fbtn {
-  min-height: 46px;
-  padding: 10px 13px;
-  font-size: 13px;
+.touch-ui .proto-bar-name {
+  width: calc(42px * var(--ui-scale));
+  font-size: calc(11px * var(--ui-scale));
 }
 
-.hk-input {
-  min-height: 52px;
-  padding: 11px 12px;
-  font-size: 15px !important;
+.touch-ui .proto-bar-pct {
+  width: calc(40px * var(--ui-scale));
+  font-size: calc(11px * var(--ui-scale));
 }
 
-.hk-label {
-  font-size: 12px;
-}
-
-.form-check-input {
-  width: 46px !important;
-  height: 26px !important;
-}
-
-.proto {
-  padding: 4px 8px;
-  font-size: 12px;
-}
-
-.hk-progress {
-  height: 15px;
-}
-
-.proto-bar-row {
-  min-height: 38px;
-  gap: 10px;
-  margin-bottom: 9px;
-}
-
-.proto-bar-name {
-  width: 52px;
-  font-size: 14px;
-}
-
-.proto-bar-pct {
-  width: 48px;
-  font-size: 14px;
-}
-
-.hk-table-wrap {
+.touch-ui .hk-table-wrap,
+.touch-ui .terminal {
   max-height: calc(100vh - var(--topbar-h) - var(--bottomnav-h) - 135px);
 }
 
-.hk-table {
-  font-size: 13px;
+.touch-ui .hk-table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--g2);
+  --bs-table-border-color: #060f06;
+  font-size: calc(11px * var(--ui-scale));
 }
 
-.hk-table th {
-  padding: 10px 9px;
-  font-size: 11px;
+.touch-ui .dev-item {
+  min-height: calc(62px * var(--ui-scale));
+  padding: calc(11px * var(--ui-scale));
 }
 
-.hk-table td {
-  padding: 10px 9px;
+.touch-ui .dev-dot {
+  width: calc(9px * var(--ui-scale));
+  height: calc(9px * var(--ui-scale));
 }
 
-.dev-item {
-  min-height: 74px;
-  margin-bottom: 9px;
-  padding: 14px 13px;
+.touch-ui .dev-item [style*="font-size"] {
+  font-size: calc(10px * var(--ui-scale)) !important;
 }
 
-.dev-dot {
-  width: 12px;
-  height: 12px;
+.touch-ui .terminal,
+.touch-ui .modal-body {
+  font-size: calc(11px * var(--ui-scale));
 }
 
-.dev-item [style*="font-size:14px"] {
-  font-size: 16px !important;
-}
-
-.dev-item [style*="font-size:12px"] {
-  font-size: 14px !important;
-}
-
-.dev-item [style*="font-size:10px"],
-.dev-item [style*="font-size:9px"] {
-  font-size: 12px !important;
-}
-
-.terminal {
-  height: calc(100vh - var(--topbar-h) - var(--bottomnav-h) - 145px);
-  padding: 12px 14px;
-  font-size: 13px;
-}
-
-.modal-title {
-  font-size: 28px;
-}
-
-.modal-body {
-  font-size: 14px;
-}
-
-.modal-key {
-  width: 105px;
-  font-size: 12px;
-}
-
-.modal-hex {
-  font-size: 12px;
+.touch-ui .modal-title {
+  font-size: calc(23px * var(--ui-scale));
 }
 
 @media (min-width: 768px) {
-  .content {
+  .touch-ui .content {
     margin-left: var(--sidebar-w);
     padding-bottom: 0;
   }
 
-  .page {
+  .touch-ui .page {
     min-height: calc(100vh - var(--topbar-h));
-    padding: 22px 24px;
-  }
-
-  .terminal {
-    height: calc(100vh - var(--topbar-h) - 140px);
   }
 }
 
 @media (max-width: 380px) {
   :root {
-    --topbar-h: 56px;
-    --bottomnav-h: 70px;
-  }
-
-  .topbar-brand {
-    font-size: 28px;
-    letter-spacing: 2px;
-  }
-
-  .topbar-right {
-    gap: 8px;
-  }
-
-  .page {
-    padding: 12px;
-  }
-
-  .hk-btn {
-    font-size: 13px !important;
+    --ui-scale: 1.12;
   }
 }
