@@ -414,23 +414,10 @@
     <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">PKT_218441</h5>
+          <h5 class="modal-title">PKT_DETAIL</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
-          <div><span class="modal-key">TIME</span><span class="modal-val">14:32:07.441</span></div>
-          <div><span class="modal-key">SRC</span><span class="modal-val">192.168.1.105:52341</span></div>
-          <div><span class="modal-key">DST</span><span class="modal-val">142.250.74.46:443</span></div>
-          <div><span class="modal-key">PROTO</span><span class="modal-val">TCP</span></div>
-          <div><span class="modal-key">LENGTH</span><span class="modal-val">1460 bytes</span></div>
-          <div><span class="modal-key">TTL</span><span class="modal-val">64</span></div>
-          <div><span class="modal-key">FLAGS</span><span class="modal-val">PA</span></div>
-          <div><span class="modal-key">SEQ</span><span class="modal-val">3849201744</span></div>
-          <div class="modal-hex">
-            45 00 05 b4 1a 2f 40 00 40 06 00 00 c0 a8 01 69<br>
-            8e fa 4a 2e cc 65 01 bb d4 f2 00 00 00 00 00 00
-          </div>
-        </div>
+        <div class="modal-body" id="packetBody"></div>
         <div class="modal-footer">
           <button class="btn btn-lg hk-btn hk-btn-default w-100" data-bs-dismiss="modal">[ CHIUDI ]</button>
         </div>
@@ -449,13 +436,9 @@
         <div class="modal-body">
           <div><span class="modal-key">IP</span><span class="modal-val">192.168.1.1</span></div>
           <div><span class="modal-key">MAC</span><span class="modal-val">aa:bb:cc:11:22:33</span></div>
-          <div><span class="modal-key">VENDOR</span><span class="modal-val">TP-Link</span></div>
-          <div><span class="modal-key">PACKETS</span><span class="modal-val">41,200</span></div>
-          <div><span class="modal-key">STATUS</span><span class="modal-val" style="color:var(--g3)">ONLINE</span></div>
           <div class="open-ports">
             <div>OPEN PORTS</div>
-            <div>80 &nbsp;·&nbsp; 443 &nbsp;·&nbsp; 22
-              &nbsp;·&nbsp; 8080</div>
+            <div id="openPorts"></div>
           </div>
         </div>
         <div class="modal-footer">

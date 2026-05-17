@@ -1,7 +1,8 @@
 # DOPO - con AsyncSniffer
 from scapy.all import AsyncSniffer
 from scapy.layers.inet import IP, TCP, UDP, ICMP
-
+from scapy.layers.l2 import ARP
+from scapy.layers.dns import DNS
 
 class Sniffer:
 
@@ -31,33 +32,72 @@ class Sniffer:
             print("Stop sniffer")
 
     def callbackPacket(self, pkt):
-        if not pkt.haslayer(IP):
-            return
 
         self.index += 1
 
         data = {
             "index": str(self.index),
-            "src": pkt[IP].src,
-            "dst": pkt[IP].dst,
+            "src": "N/A",
+            "dst": "N/A",
             "proto": "Undefined",
-            "info": "Undefined",
-            "length": "Undefined",
+            "info": "",
+            "length": str(len(pkt)),
         }
 
-        if pkt.haslayer(TCP):
-            data["proto"] = "TCP"
-            data["info"] = str(pkt[TCP].flags)
-        elif pkt.haslayer(UDP):
-            data["proto"] = "UDP"
-        elif pkt.haslayer(ICMP):
-            data["proto"] = "ICMP"
+        # ARP
+        if pkt.haslayer(ARP):
+            arp = pkt[ARP]
 
-        data["length"] = str(len(pkt))
+            data["proto"] = "ARP"
+
+            data["sender_ip"] = arp.psrc
+            data["sender_mac"] = arp.hwsrc
+            data["target_ip"] = arp.pdst
+            data["target_mac"] = arp.hwdst
+
+            if arp.op == 1:
+                data["info"] = f"ARP Request: Who has {arp.pdst}?"
+            elif arp.op == 2:
+                data["info"] = f"ARP Reply: {arp.psrc} is at {arp.hwsrc}"
+
+        # IP
+        elif pkt.haslayer(IP):
+
+            data["src"] = pkt[IP].src
+            data["dst"] = pkt[IP].dst
+
+            # TCP
+            if pkt.haslayer(TCP):
+                data["proto"] = "TCP"
+                data["info"] = str(pkt[TCP].flags)
+
+            # DNS
+            elif pkt.haslayer(DNS):
+                dns = pkt[DNS]
+                data["proto"] = "DNS"
+
+                if dns.qr == 0 and dns.qd:
+                    try:
+                        data["info"] = dns.qd.qname.decode()
+                    except:
+                        data["info"] = "DNS Query"
+                else:
+                    data["info"] = "DNS Response"
+
+            # UDP
+            elif pkt.haslayer(UDP):
+                data["proto"] = "UDP"
+
+            # ICMP
+            elif pkt.haslayer(ICMP):
+                data["proto"] = "ICMP"
+
+        else:
+            return
 
         if self.on_packet:
             self.on_packet(data)
-            self.packets[str(self.index)] = pkt
+        self.packets[str(self.index)] = pkt
 
     def selectSinglePacket(self, index):
         pkt = self.packets[str(index)]

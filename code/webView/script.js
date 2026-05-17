@@ -12,6 +12,8 @@ let isSniffing = false
 let LAN = "0.0.0.0"
 
 packetTotal = document.getElementById("packetTotal")
+packetBody = document.getElementById("packetBody")
+openPorts = document.getElementById("openPorts")
 
 // tasto di sniffer
 startStop = document.getElementById("startStop")
@@ -79,17 +81,46 @@ socket.onmessage = (event) => {
         addPacketRow(msg.data)
     }
     else if (msg.type === "detail") {
-        console.log(msg.data)
+        packetBody.innerHTML = ''
+        Object.entries(msg.data).forEach(([key, value]) => {
+            const div = document.createElement("div");
+
+            const k = document.createElement("span");
+            k.className = "modal-key";
+            k.textContent = key;
+
+            const v = document.createElement("span");
+            v.className = "modal-val";
+
+            // HEX trattato separatamente per stile
+            if (key.toLowerCase() === "raw_hex" || key.toLowerCase() === "raw_text" ) {
+                const hex = document.createElement("div");
+                hex.className = "modal-hex";
+                hex.textContent = value;
+
+                packetBody.appendChild(hex);
+                return;
+            }
+
+            v.textContent = value;
+
+            div.appendChild(k);
+            div.appendChild(v);
+            packetBody.appendChild(div);
+        });
+
+
     }
     else if (msg.type === "devices") {
         renderDevices(msg.data)
         console.log("device renderizzati")
     }
     else if (msg.type === "ports") {
-        console.log(msg.data)
+        openPorts.textContent = ""
+        openPorts.textContent = msg.data
     }
-}
 
+}
 
 // functions per effetti grafici
 function updateProtoBars() {
@@ -186,10 +217,10 @@ function renderDevices(devices) {
             </div>
 
             <div class="flex-grow-1">
-                <div style="color:var(--g3);font-size:14px">
+                <div style="color:var(--g3);">
                     ${dev.ip}
                 </div>
-                <div style="color:var(--dim);font-size:10px;margin-top:2px">
+                <div style="color:var(--dim);margin-top:2px">
                     ${dev.mac}
                 </div>
             </div>
@@ -198,7 +229,7 @@ function renderDevices(devices) {
                 <div style="color:var(--g2);font-size:12px">
                     ●
                 </div>
-                <div style="font-size:9px;color:var(--g3);letter-spacing:1px">
+                <div style="color:var(--g3);letter-spacing:1px">
                     ONLINE
                 </div>
             </div>

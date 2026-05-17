@@ -35,7 +35,7 @@ class Scanner:
 
         for x in range(startPort, endPort + 1):
             packet = IP(dst=target) / TCP(dport=x, flags="S")
-            response = sr1(packet, timeout=0.5, verbose=0)
+            response = sr1(packet, timeout=0.1, verbose=0)
 
             if response is None:
                 continue
