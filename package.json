@@ -1,0 +1,37 @@
+{
+  "name": "sniffable",
+  "version": "1.0.0",
+  "description": "Programma scritto in python con ausilio di scapy. Tale programma è pensato per essere utilizzato con Raspberry Pi 5 touch.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.sniffable.app",
+    "productName": "Sniffable",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!venv",
+      "!venv/**"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreaGros/Sniffable.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AndreaGros/Sniffable/issues"
+  },
+  "homepage": "https://github.com/AndreaGros/Sniffable#readme",
+  "devDependencies": {
+    "electron": "^42.1.0"
+  }
+}

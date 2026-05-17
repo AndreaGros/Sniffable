@@ -1,18 +1,64 @@
-# Python - file compilati
+################################
+# Python
+################################
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Ambienti virtuali
+# ambienti virtuali (IMPORTANTISSIMO)
 venv/
 env/
+.venv/
 
-# File di sistema e IDE
+################################
+# Node / Electron
+################################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+################################
+# Build Electron (NON versionare)
+################################
+dist/
+linux-unpacked/
+out/
+release/
+
+*.AppImage
+*.deb
+*.snap
+*.exe
+*.dmg
+
+################################
+# System / IDE
+################################
 .DS_Store
 .vscode/
 .idea/
 
-# File temporanei di cattura (i tuoi pacchetti sniffati)
+################################
+# Logs
+################################
+*.log
+
+################################
+# Capture files (sniffer project)
+################################
 *.pcap
 *.cap
-*.log
+
+################################
+# OS / Linux
+################################
+*.swp
+*.swo
+*~
+
+################################
+# Electron cache / rebuild
+################################
+.cache/
+electron-cache/
