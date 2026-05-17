@@ -20,10 +20,10 @@
     <div class="topbar-right">
       <div>
         <span class="status-dot on" id="cap-dot"></span>
-        <span id="cap-status" style="font-size:10px;letter-spacing:1px">CAPTURING</span>
+        <span id="cap-status">CAPTURING</span>
       </div>
       <div class="text-end">
-        <div id="clock" style="color:var(--g2);font-size:11px">00:00:00</div>
+        <div id="clock">00:00:00</div>
         <div class="topbar-iface">eth0</div>
       </div>
     </div>
@@ -85,15 +85,10 @@
       </div>
 
       <div class="proto-bar-row" data-proto="tcp">
-        <span class="proto-bar-name" style="color:#00ff88">TCP</span>
+        <span class="proto-bar-name">TCP</span>
 
         <div class="hk-progress flex-grow-1">
-          <div class="hk-progress-bar proto-fill" style="
-        width:0%;
-        background:#00ff88;
-        opacity:0.7;
-        transition:width 0.35s ease-out;
-      ">
+          <div class="hk-progress-bar proto-fill">
           </div>
         </div>
 
@@ -101,15 +96,10 @@
       </div>
 
       <div class="proto-bar-row" data-proto="udp">
-        <span class="proto-bar-name" style="color:var(--blue)">UDP</span>
+        <span class="proto-bar-name">UDP</span>
 
         <div class="hk-progress flex-grow-1">
-          <div class="hk-progress-bar proto-fill" style="
-        width:0%;
-        background:var(--blue);
-        opacity:0.7;
-        transition:width 0.35s ease-out;
-      ">
+          <div class="hk-progress-bar proto-fill">
           </div>
         </div>
 
@@ -117,15 +107,10 @@
       </div>
 
       <div class="proto-bar-row" data-proto="arp">
-        <span class="proto-bar-name" style="color:var(--amber)">ARP</span>
+        <span class="proto-bar-name">ARP</span>
 
         <div class="hk-progress flex-grow-1">
-          <div class="hk-progress-bar proto-fill" style="
-        width:0%;
-        background:var(--amber);
-        opacity:0.7;
-        transition:width 0.35s ease-out;
-      ">
+          <div class="hk-progress-bar proto-fill">
           </div>
         </div>
 
@@ -133,15 +118,10 @@
       </div>
 
       <div class="proto-bar-row" data-proto="icmp">
-        <span class="proto-bar-name" style="color:var(--red)">ICMP</span>
+        <span class="proto-bar-name">ICMP</span>
 
         <div class="hk-progress flex-grow-1">
-          <div class="hk-progress-bar proto-fill" style="
-        width:0%;
-        background:var(--red);
-        opacity:0.7;
-        transition:width 0.35s ease-out;
-      ">
+          <div class="hk-progress-bar proto-fill">
           </div>
         </div>
 
@@ -149,14 +129,10 @@
       </div>
 
       <div class="proto-bar-row mb-3" data-proto="dns">
-        <span class="proto-bar-name" style="color:var(--purple)">DNS</span>
+        <span class="proto-bar-name">DNS</span>
 
         <div class="hk-progress flex-grow-1">
-          <div class="hk-progress-bar proto-fill" style="
-        width:0%;
-        background:var(--purple);
-        opacity:0.7;
-        transition:width 0.35s ease-out;">
+          <div class="hk-progress-bar proto-fill">
           </div>
         </div>
 
@@ -222,72 +198,72 @@
       <div class="dev-item" data-bs-toggle="modal" data-bs-target="#devModal">
         <div class="dev-dot" style="background:var(--g3);box-shadow:0 0 5px var(--g3)"></div>
         <div class="flex-grow-1">
-          <div style="color:var(--g3);font-size:14px">192.168.1.1</div>
-          <div style="color:var(--dim);font-size:10px;margin-top:2px">aa:bb:cc:11:22:33 · TP-Link</div>
+          <div style="color:var(--g3)">192.168.1.1</div>
+          <div style="color:var(--dim);margin-top:2px">aa:bb:cc:11:22:33 · TP-Link</div>
         </div>
         <div class="text-end">
-          <div style="color:var(--g2);font-size:12px">41.2k</div>
-          <div style="font-size:9px;color:var(--g3);letter-spacing:1px">ONLINE</div>
+          <div style="color:var(--g2)">41.2k</div>
+          <div style="color:var(--g3);letter-spacing:1px">ONLINE</div>
         </div>
       </div>
 
       <div class="dev-item" data-bs-toggle="modal" data-bs-target="#devModal">
         <div class="dev-dot" style="background:var(--g3);box-shadow:0 0 5px var(--g3)"></div>
         <div class="flex-grow-1">
-          <div style="color:var(--g3);font-size:14px">192.168.1.105</div>
-          <div style="color:var(--dim);font-size:10px;margin-top:2px">11:22:33:44:55:66 · Raspberry Pi</div>
+          <div style="color:var(--g3)">192.168.1.105</div>
+          <div style="color:var(--dim);margin-top:2px">11:22:33:44:55:66 · Raspberry Pi</div>
         </div>
         <div class="text-end">
-          <div style="color:var(--g2);font-size:12px">28.7k</div>
-          <div style="font-size:9px;color:var(--g3);letter-spacing:1px">ONLINE</div>
+          <div style="color:var(--g2)">28.7k</div>
+          <div style="color:var(--g3);letter-spacing:1px">ONLINE</div>
         </div>
       </div>
 
       <div class="dev-item" data-bs-toggle="modal" data-bs-target="#devModal">
         <div class="dev-dot" style="background:var(--g3);box-shadow:0 0 5px var(--g3)"></div>
         <div class="flex-grow-1">
-          <div style="color:var(--g3);font-size:14px">192.168.1.110</div>
-          <div style="color:var(--dim);font-size:10px;margin-top:2px">de:ad:be:ef:ca:fe · Apple Inc.</div>
+          <div style="color:var(--g3)">192.168.1.110</div>
+          <div style="color:var(--dim);margin-top:2px">de:ad:be:ef:ca:fe · Apple Inc.</div>
         </div>
         <div class="text-end">
-          <div style="color:var(--g2);font-size:12px">19.1k</div>
-          <div style="font-size:9px;color:var(--g3);letter-spacing:1px">ONLINE</div>
+          <div style="color:var(--g2)">19.1k</div>
+          <div style="color:var(--g3);letter-spacing:1px">ONLINE</div>
         </div>
       </div>
 
       <div class="dev-item" data-bs-toggle="modal" data-bs-target="#devModal">
         <div class="dev-dot" style="background:var(--dim)"></div>
         <div class="flex-grow-1">
-          <div style="color:var(--g2);font-size:14px">192.168.1.120</div>
-          <div style="color:var(--dim);font-size:10px;margin-top:2px">ff:ee:dd:cc:bb:aa · Samsung Elec.</div>
+          <div style="color:var(--g2)">192.168.1.120</div>
+          <div style="color:var(--dim);margin-top:2px">ff:ee:dd:cc:bb:aa · Samsung Elec.</div>
         </div>
         <div class="text-end">
-          <div style="color:var(--g1);font-size:12px">12.4k</div>
-          <div style="font-size:9px;color:var(--dim);letter-spacing:1px">OFFLINE</div>
+          <div style="color:var(--g1)">12.4k</div>
+          <div style="color:var(--dim);letter-spacing:1px">OFFLINE</div>
         </div>
       </div>
 
       <div class="dev-item" data-bs-toggle="modal" data-bs-target="#devModal">
         <div class="dev-dot" style="background:var(--g3);box-shadow:0 0 5px var(--g3)"></div>
         <div class="flex-grow-1">
-          <div style="color:var(--g3);font-size:14px">10.0.0.14</div>
-          <div style="color:var(--dim);font-size:10px;margin-top:2px">ca:fe:ba:be:00:01 · Unknown</div>
+          <div style="color:var(--g3)">10.0.0.14</div>
+          <div style="color:var(--dim);margin-top:2px">ca:fe:ba:be:00:01 · Unknown</div>
         </div>
         <div class="text-end">
-          <div style="color:var(--g2);font-size:12px">8.9k</div>
-          <div style="font-size:9px;color:var(--g3);letter-spacing:1px">ONLINE</div>
+          <div style="color:var(--g2)">8.9k</div>
+          <div style="color:var(--g3);letter-spacing:1px">ONLINE</div>
         </div>
       </div>
 
       <div class="dev-item" data-bs-toggle="modal" data-bs-target="#devModal">
         <div class="dev-dot" style="background:var(--dim)"></div>
         <div class="flex-grow-1">
-          <div style="color:var(--g2);font-size:14px">172.16.0.22</div>
-          <div style="color:var(--dim);font-size:10px;margin-top:2px">00:11:22:33:44:55 · Xiaomi Comm.</div>
+          <div style="color:var(--g2)">172.16.0.22</div>
+          <div style="color:var(--dim);margin-top:2px">00:11:22:33:44:55 · Xiaomi Comm.</div>
         </div>
         <div class="text-end">
-          <div style="color:var(--g1);font-size:12px">4.2k</div>
-          <div style="font-size:9px;color:var(--dim);letter-spacing:1px">OFFLINE</div>
+          <div style="color:var(--g1)">4.2k</div>
+          <div style="color:var(--dim);letter-spacing:1px">OFFLINE</div>
         </div>
       </div>
 
@@ -343,7 +319,7 @@
       <div class="hk-card mb-2">
         <div class="hk-card-header">
           <span>// TRASPORTO</span>
-          <select class="form-select form-select-lg hk-input w-auto py-1" style="font-size:10px">
+          <select class="form-select form-select-lg hk-input w-auto py-1">
             <option>TCP</option>
             <option>UDP</option>
             <option>ICMP</option>
@@ -476,9 +452,9 @@
           <div><span class="modal-key">VENDOR</span><span class="modal-val">TP-Link</span></div>
           <div><span class="modal-key">PACKETS</span><span class="modal-val">41,200</span></div>
           <div><span class="modal-key">STATUS</span><span class="modal-val" style="color:var(--g3)">ONLINE</span></div>
-          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
-            <div style="font-size:9px;color:var(--g1);letter-spacing:2px;margin-bottom:6px">OPEN PORTS</div>
-            <div style="color:var(--g2);font-size:12px;letter-spacing:2px">80 &nbsp;·&nbsp; 443 &nbsp;·&nbsp; 22
+          <div class="open-ports">
+            <div>OPEN PORTS</div>
+            <div>80 &nbsp;·&nbsp; 443 &nbsp;·&nbsp; 22
               &nbsp;·&nbsp; 8080</div>
           </div>
         </div>
