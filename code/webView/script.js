@@ -12,8 +12,10 @@ let isSniffing = false
 let LAN = "0.0.0.0"
 
 packetTotal = document.getElementById("packetTotal")
+devicesNumber = document.getElementById("devicesNumber")
 packetBody = document.getElementById("packetBody")
 openPorts = document.getElementById("openPorts")
+sendPacket = document.getElementById("sendPacket")
 
 // tasto di sniffer
 startStop = document.getElementById("startStop")
@@ -22,6 +24,10 @@ startStop.addEventListener("click", () => {
         action: isSniffing == false ? "start_sniffer" : "stop_sniffer"
     }))
     isSniffing = !isSniffing
+    if (isSniffing == true)
+        startStop.innerHTML = '<i class="bi bi-stop-fill me-1"></i>STOP'
+    else
+        startStop.innerHTML = '<i class="bi bi-caret-right-fill"></i>PLAY'
 })
 
 // tasto clear
@@ -40,6 +46,7 @@ clear.addEventListener("click", () => {
     packets = []
     updateProtoBars()
     document.querySelector("tbody").innerHTML = ""
+    packetTotal.textContent = "0"
 })
 
 // scan
@@ -53,6 +60,76 @@ scanBtn.addEventListener("click", () => {
     }))
     console.log(targetLAN.value)
 })
+
+// send packet
+const chkETH = document.getElementById("chkETH");
+const dstMAC = document.getElementById("dstMAC");
+const srcMAC = document.getElementById("srcMAC");
+
+const chkIP = document.getElementById("chkIP");
+const dstIP = document.getElementById("dstIP");
+const ttl = document.getElementById("ttl");
+const srcIP = document.getElementById("srcIP");
+
+const proto = document.getElementById("proto");
+const dstPort = document.getElementById("dstPort");
+const flags = document.getElementById("flags");
+
+const chkPayload = document.getElementById("chkPayload");
+const payload = document.getElementById("payload");
+
+sendPacket.addEventListener("click", () => {
+    let pkt = buildPacket()
+    console.log(pkt)
+})
+
+function buildPacket() {
+
+    const packet = {};
+
+    if (chkETH.checked) {
+        packet.eth = {
+            dst: dstMAC.value.trim(),
+            src: srcMAC.value.trim() || "auto"
+        };
+    }
+
+    if (chkIP.checked) {
+        packet.ip = {
+            dst: dstIP.value.trim(),
+            src: srcIP.value.trim() || "auto",
+            ttl: parseInt(ttl.value, 10) || 64
+        };
+    }
+    const selectedProto = proto.value;
+
+    if (selectedProto !== "NONE") {
+
+        packet.transport = {
+            protocol: selectedProto
+        };
+
+        if (selectedProto === "TCP") {
+            packet.transport.dstPort = parseInt(dstPort.value, 10) || 0;
+            packet.transport.flags = flags.value.trim().toUpperCase();
+        }
+
+        if (selectedProto === "UDP") {
+            packet.transport.dstPort = parseInt(dstPort.value, 10) || 0;
+        }
+
+        if (selectedProto === "ICMP") {
+            packet.transport.type = 8;
+            packet.transport.code = 0;
+        }
+    }
+
+    if (chkPayload.checked) {
+        packet.payload = payload.value;
+    }
+
+    return packet;
+}
 
 // socket
 socket.addEventListener("open", () => {
@@ -93,7 +170,7 @@ socket.onmessage = (event) => {
             v.className = "modal-val";
 
             // HEX trattato separatamente per stile
-            if (key.toLowerCase() === "raw_hex" || key.toLowerCase() === "raw_text" ) {
+            if (key.toLowerCase() === "raw_hex" || key.toLowerCase() === "raw_text") {
                 const hex = document.createElement("div");
                 hex.className = "modal-hex";
                 hex.textContent = value;
@@ -113,6 +190,7 @@ socket.onmessage = (event) => {
     }
     else if (msg.type === "devices") {
         renderDevices(msg.data)
+        devicesNumber.textContent = msg.data.length
         console.log("device renderizzati")
     }
     else if (msg.type === "ports") {

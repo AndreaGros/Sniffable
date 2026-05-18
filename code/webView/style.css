@@ -167,7 +167,7 @@ body::before {
   z-index: 20;
   height: var(--bottomnav-h);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   background: rgba(6, 17, 6, 0.97);
   border-top: 1px solid var(--line2);
   box-shadow: 0 -8px 24px rgba(57, 255, 100, 0.14);

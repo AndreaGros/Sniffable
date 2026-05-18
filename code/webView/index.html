@@ -16,12 +16,8 @@
 
   <!-- TOPBAR -->
   <div class="topbar">
-    <div class="topbar-brand">SNIF<span>FER</span>_PI</div>
+    <div class="topbar-brand">SNIFF<span>ABLE</span>_PI</div>
     <div class="topbar-right">
-      <div>
-        <span class="status-dot on" id="cap-dot"></span>
-        <span id="cap-status">CAPTURING</span>
-      </div>
       <div class="text-end">
         <div id="clock">00:00:00</div>
         <div class="topbar-iface">eth0</div>
@@ -35,7 +31,6 @@
     <div class="sitem" onclick="nav('packets',this)"><i class="bi bi-list-ul"></i>PACKETS</div>
     <div class="sitem" onclick="nav('devices',this)"><i class="bi bi-diagram-3"></i>DEVICES</div>
     <div class="sitem" onclick="nav('sender',this)"><i class="bi bi-send"></i>SENDER</div>
-    <div class="sitem" onclick="nav('log',this)"><i class="bi bi-terminal"></i>LOG</div>
   </div>
 
   <!-- CONTENT -->
@@ -55,7 +50,7 @@
         <div class="col-6">
           <div class="stat-box">
             <div class="stat-label">HOSTS</div>
-            <div class="stat-val text-amber">31</div>
+            <div id="devicesNumber" class="stat-val text-amber">0</div>
             <div class="stat-sub">rilevati</div>
           </div>
         </div>
@@ -64,7 +59,7 @@
       <div class="row g-2 mb-3">
         <div class="col-5">
           <button class="btn btn-lg hk-btn hk-btn-stop w-100" id="startStop">
-            <i class="bi bi-stop-fill me-1"></i>STOP
+            <i class="bi bi-caret-right-fill"></i>PLAY
           </button>
         </div>
         <div class="col-4">
@@ -276,17 +271,17 @@
         <div class="hk-card-header">
           <span>// ETHERNET</span>
           <div class="form-check form-switch mb-0">
-            <input class="form-check-input" type="checkbox" checked>
+            <input id="chkETH" class="form-check-input" type="checkbox" checked>
           </div>
         </div>
         <div class="p-3">
           <div class="mb-2">
             <label class="hk-label">DST MAC</label>
-            <input class="form-control form-control-lg hk-input" type="text" value="ff:ff:ff:ff:ff:ff">
+            <input id="dstMAC" class="form-control form-control-lg hk-input" type="text" value="ff:ff:ff:ff:ff:ff">
           </div>
           <div>
             <label class="hk-label">SRC MAC</label>
-            <input class="form-control form-control-lg hk-input" type="text" placeholder="auto">
+            <input id="srcMAC" class="form-control form-control-lg hk-input" type="text" placeholder="auto">
           </div>
         </div>
       </div>
@@ -295,23 +290,23 @@
         <div class="hk-card-header">
           <span>// IP</span>
           <div class="form-check form-switch mb-0">
-            <input class="form-check-input" type="checkbox" checked>
+            <input id="chkIP" class="form-check-input" type="checkbox" checked>
           </div>
         </div>
         <div class="p-3">
           <div class="row g-2 mb-2">
             <div class="col-8">
               <label class="hk-label">DST IP</label>
-              <input class="form-control form-control-lg hk-input" type="text" value="192.168.1.1">
+              <input  id="dstIP" class="form-control form-control-lg hk-input" type="text" value="192.168.1.1">
             </div>
             <div class="col-4">
               <label class="hk-label">TTL</label>
-              <input class="form-control form-control-lg hk-input" type="number" value="64">
+              <input id="ttl" class="form-control form-control-lg hk-input" type="number" value="64">
             </div>
           </div>
           <div>
             <label class="hk-label">SRC IP</label>
-            <input class="form-control form-control-lg hk-input" type="text" placeholder="auto">
+            <input id="srcIP" class="form-control form-control-lg hk-input" type="text" placeholder="auto">
           </div>
         </div>
       </div>
@@ -319,7 +314,7 @@
       <div class="hk-card mb-2">
         <div class="hk-card-header">
           <span>// TRASPORTO</span>
-          <select class="form-select form-select-lg hk-input w-auto py-1">
+          <select id="proto" class="form-select form-select-lg hk-input w-auto py-1">
             <option>TCP</option>
             <option>UDP</option>
             <option>ICMP</option>
@@ -330,11 +325,11 @@
           <div class="row g-2">
             <div class="col-6">
               <label class="hk-label">DST PORT</label>
-              <input class="form-control form-control-lg hk-input" type="number" value="80">
+              <input id="dstPort" class="form-control form-control-lg hk-input" type="number" value="80">
             </div>
             <div class="col-6">
               <label class="hk-label">FLAGS</label>
-              <input class="form-control form-control-lg hk-input" type="text" value="S" placeholder="S/A/SA/R">
+              <input id="flags" class="form-control form-control-lg hk-input" type="text" value="S" placeholder="S/A/SA/R">
             </div>
           </div>
         </div>
@@ -344,18 +339,18 @@
         <div class="hk-card-header">
           <span>// PAYLOAD</span>
           <div class="form-check form-switch mb-0">
-            <input class="form-check-input" type="checkbox">
+            <input id="chkPayload" class="form-check-input" type="checkbox">
           </div>
         </div>
         <div class="p-3">
-          <textarea class="form-control form-control-lg hk-input" rows="2" placeholder="payload grezzo..."
+          <textarea id="payload" class="form-control form-control-lg hk-input" rows="2" placeholder="payload grezzo..."
             style="resize:none;min-height:70px"></textarea>
         </div>
       </div>
 
       <div class="row g-2">
         <div class="col-8">
-          <button class="btn btn-lg hk-btn hk-btn-primary w-100">
+          <button class="btn btn-lg hk-btn hk-btn-primary w-100" id="sendPacket">
             <i class="bi bi-lightning-fill me-1"></i>INVIA PACCHETTO
           </button>
         </div>
@@ -406,7 +401,6 @@
     <div class="bitem" onclick="nav('packets',this)"><i class="bi bi-list-ul"></i>PACKETS</div>
     <div class="bitem" onclick="nav('devices',this)"><i class="bi bi-diagram-3"></i>DEVICES</div>
     <div class="bitem" onclick="nav('sender',this)"><i class="bi bi-send"></i>SENDER</div>
-    <div class="bitem" onclick="nav('log',this)"><i class="bi bi-terminal"></i>LOG</div>
   </div>
 
   <!-- MODAL: Packet detail -->
