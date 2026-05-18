@@ -80,7 +80,10 @@ const payload = document.getElementById("payload");
 
 sendPacket.addEventListener("click", () => {
     let pkt = buildPacket()
-    console.log(pkt)
+    socket.send(JSON.stringify({
+        action: "sender",
+        "pkt": pkt
+    }))
 })
 
 function buildPacket() {

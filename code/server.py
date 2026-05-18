@@ -23,6 +23,55 @@ async def packet_stream(websocket):
 
         await websocket.send(json.dumps({"type": "packet", "data": packet}))
 
+def packet_from_json(data: dict, iface=None):
+
+    sender = Sender(iface=iface)
+    eth = data.get("eth")
+
+    if eth:
+        sender.add_ether(
+            dst=eth.get("dst", "ff:ff:ff:ff:ff:ff"),
+            src=eth.get("src")
+        )
+
+    ip = data.get("ip")
+
+    if ip:
+        sender.add_ip(
+            dst=ip.get("dst", "127.0.0.1"),
+            src=ip.get("src"),
+            ttl=ip.get("ttl", 64)
+        )
+
+    transport = data.get("transport")
+
+    if transport:
+
+        proto = transport.get("protocol", "").upper()
+
+        if proto == "TCP":
+            sender.add_tcp(
+                dport=transport.get("dstPort", 80),
+                sport=transport.get("srcPort"),
+                flags=transport.get("flags", "S"),
+                seq=transport.get("seq")
+            )
+
+        elif proto == "UDP":
+            sender.add_udp(
+                dport=transport.get("dstPort", 80),
+                sport=transport.get("srcPort")
+            )
+
+        elif proto == "ICMP":
+            sender.add_icmp()
+
+    payload = data.get("payload")
+
+    if payload:
+        sender.add_payload(payload)
+
+    return sender
 
 
 async def handler(websocket):
@@ -78,6 +127,14 @@ async def handler(websocket):
                     endPort
                 )
                 await websocket.send(json.dumps({"type": "ports", "data": ports}))
+            
+            elif action == "sender":
+                pktStructure = data.get("pkt")
+                sender_obj = packet_from_json(pktStructure)
+                pkt = sender_obj.build_packet()
+                if pkt:
+                    sender_obj.send(pkt)
+
 
     finally:
         stream_task.cancel()

@@ -47,6 +47,9 @@ class Sender:
             data = data.encode()
         self.layers.append(Raw(load=data))
         return self
+    
+    def add_icmp(self):
+        self.layers.append(ICMP())
 
     def build_packet(self):
         if len(self.layers) == 0:
