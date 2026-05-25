@@ -12,10 +12,16 @@ class Scanner:
         for snd, rcv in ans:
             print(f"Protocol {snd.proto} answered from {rcv.src}")
 
-    def device_scan(self, target="192.168.1.0/24"):
+    def device_scan(self, target="192.168.1.0/24", time=0.5, interface="eth0"):
+        print("Host scan")
         ans, unans = srp(
-            Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst=target), timeout=3, verbose=False
+            Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst="192.168.1.1"),
+            timeout=time,
+            verbose=True
         )
+
+        print("DONE")
+
 
         devices = []
         for sent, received in ans:

@@ -16,6 +16,8 @@ devicesNumber = document.getElementById("devicesNumber")
 packetBody = document.getElementById("packetBody")
 openPorts = document.getElementById("openPorts")
 sendPacket = document.getElementById("sendPacket")
+timeout = document.getElementById("timeout")
+interfaceList = document.getElementById("interfaceList")
 
 // tasto di sniffer
 startStop = document.getElementById("startStop")
@@ -56,7 +58,9 @@ let scanBtn = document.getElementById("scanBtn")
 scanBtn.addEventListener("click", () => {
     socket.send(JSON.stringify({
         action: "get_hosts",
-        target: targetLAN.value
+        target: targetLAN.value,
+        interface: interfaceList.value,
+        timeout: timeout.value
     }))
     console.log(targetLAN.value)
 })
