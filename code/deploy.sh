@@ -1,11 +1,7 @@
 #!/bin/bash
 
-# Vai nella cartella del progetto (opzionale ma consigliato)
-cd
+cd /home/andrew/Sniffable || exit 1
 
-cd Sniffable
-
-# Avvia il server con il python del venv
-./venv/bin/python ./code/server.py
+./venv/bin/python ./code/server.py &
 
 npm start

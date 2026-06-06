@@ -97,9 +97,8 @@ async def handle_get_hosts(websocket, data):
     await websocket.send(json.dumps({"type": "status", "data": "scan_started"}))
 
     loop = asyncio.get_running_loop()
-
     devices = await loop.run_in_executor(
-        None, scanner.device_scan, data.get("target"), data.get("time"), data.get("interface")
+        None, scanner.device_scan, data.get("target"), float(data.get("timeout")), data.get("interface")
     )
 
     await websocket.send(json.dumps({"type": "devices", "data": devices}))
