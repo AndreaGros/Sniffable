@@ -12,10 +12,11 @@ sniffer = None
 
 
 def server_callback(data, loop):
+    print(">>> server_callback", data["proto"])  # arriva qui?
     try:
         loop.call_soon_threadsafe(packet_queue.put_nowait, data)
     except asyncio.QueueFull:
-        pass  # drop packet se troppo traffico
+        print(">>> QUEUE FULL")
 
 
 async def packet_stream(websocket):
@@ -98,7 +99,11 @@ async def handle_get_hosts(websocket, data):
 
     loop = asyncio.get_running_loop()
     devices = await loop.run_in_executor(
-        None, scanner.device_scan, data.get("target"), float(data.get("timeout")), data.get("interface")
+        None,
+        scanner.device_scan,
+        data.get("target"),
+        float(data.get("timeout")),
+        data.get("interface"),
     )
 
     await websocket.send(json.dumps({"type": "devices", "data": devices}))
@@ -128,6 +133,9 @@ async def handle_sender(websocket, data):
     if pkt:
         sender_obj.send(pkt)
 
+async def handle_export_pcap(websocket, data):
+    file = sniffer.downloadCom(sniffer.packets)
+    await websocket.send(json.dumps({"type": "pcap_saved", "data": file}))
 
 handlers = {
     "start_sniffer": handle_start_sniffer,
@@ -137,6 +145,7 @@ handlers = {
     "get_hosts": handle_get_hosts,
     "port_scan": handle_port_scan,
     "sender": handle_sender,
+    "download": handle_export_pcap
 }
 
 

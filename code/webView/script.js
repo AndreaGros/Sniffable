@@ -20,7 +20,7 @@ timeout = document.getElementById("timeout")
 interfaceList = document.getElementById("interfaceList")
 
 // tasto di sniffer
-startStop = document.getElementById("startStop")
+const startStop = document.getElementById("startStop")
 startStop.addEventListener("click", () => {
     socket.send(JSON.stringify({
         action: isSniffing == false ? "start_sniffer" : "stop_sniffer"
@@ -33,7 +33,7 @@ startStop.addEventListener("click", () => {
 })
 
 // tasto clear
-clear = document.getElementById("clear")
+const clear = document.getElementById("clear")
 clear.addEventListener("click", () => {
     socket.send(JSON.stringify({
         action: "clear"
@@ -50,6 +50,15 @@ clear.addEventListener("click", () => {
     document.querySelector("tbody").innerHTML = ""
     packetTotal.textContent = "0"
 })
+
+//tasto download
+const download = document.getElementById("download")
+download.addEventListener("click", () => {
+    socket.send(JSON.stringify({
+        action: "download"
+    }))
+})
+
 
 // scan
 let targetLAN = document.getElementById("targetLAN")
@@ -204,7 +213,9 @@ socket.onmessage = (event) => {
         openPorts.textContent = ""
         openPorts.textContent = msg.data
     }
-
+    else if (msg.type === "pcap_saved"){
+        alert("Saved file: " + msg.data)
+    }
 }
 
 // functions per effetti grafici

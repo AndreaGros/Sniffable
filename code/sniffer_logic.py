@@ -1,15 +1,15 @@
 # DOPO - con AsyncSniffer
-from scapy.all import AsyncSniffer
+from scapy.all import AsyncSniffer, wrpcap
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import ARP
 from scapy.layers.dns import DNS
+from datetime import datetime
 
 class Sniffer:
 
-    index = 0
-    packets = {}
-
     def __init__(self, iface=None, on_packet=None, bpf_filter=""):
+        self.index = 0
+        self.packets = {}
         self.iface = iface
         self.on_packet = on_packet
         self.bpf_filter = bpf_filter
@@ -147,3 +147,8 @@ class Sniffer:
             result["raw_text"] = raw.decode("utf-8", errors="replace")
 
         return result
+    
+    def downloadCom(self, pkts):
+        filename = f"capture_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pcap"
+        wrpcap(filename,pkts.values())
+        return filename
