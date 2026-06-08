@@ -19,14 +19,14 @@ class Sender:
         self.layers.append(Ether(**kwargs))
         return self
 
-    def add_ip(self, dst="127.0.0.1", src=None, ttl=64):
+    def add_ip(self, dst="127.0.0.1", src="192.168.1.1", ttl=64):
         kwargs = {"dst": dst, "ttl": ttl}
         if src:
             kwargs["src"] = src
         self.layers.append(IP(**kwargs))
         return self
 
-    def add_tcp(self, dport=80, sport=None, flags="S", seq=None):
+    def add_tcp(self, dport=80, sport="None", flags="S", seq=None):
         kwargs = {"dport": dport, "flags": flags}
         if sport:
             kwargs["sport"] = sport

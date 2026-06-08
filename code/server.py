@@ -72,7 +72,7 @@ def packet_from_json(data: dict, iface=None):
 
 
 async def handle_start_sniffer(websocket, data):
-    sniffer.start()
+    sniffer.start(data.get("filter"))
     await websocket.send(json.dumps({"type": "status", "data": "sniffer_started"}))
 
 

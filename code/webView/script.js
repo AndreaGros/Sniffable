@@ -11,19 +11,21 @@ let protos = {
 let isSniffing = false
 let LAN = "0.0.0.0"
 
-packetTotal = document.getElementById("packetTotal")
-devicesNumber = document.getElementById("devicesNumber")
-packetBody = document.getElementById("packetBody")
-openPorts = document.getElementById("openPorts")
-sendPacket = document.getElementById("sendPacket")
-timeout = document.getElementById("timeout")
-interfaceList = document.getElementById("interfaceList")
+const packetTotal = document.getElementById("packetTotal")
+const devicesNumber = document.getElementById("devicesNumber")
+const packetBody = document.getElementById("packetBody")
+const openPorts = document.getElementById("openPorts")
+const sendPacket = document.getElementById("sendPacket")
+const timeout = document.getElementById("timeout")
+const interfaceList = document.getElementById("interfaceList")
+const filter = document.getElementById("filter")
 
 // tasto di sniffer
 const startStop = document.getElementById("startStop")
 startStop.addEventListener("click", () => {
     socket.send(JSON.stringify({
-        action: isSniffing == false ? "start_sniffer" : "stop_sniffer"
+        action: isSniffing == false ? "start_sniffer" : "stop_sniffer",
+        filter: filter.value
     }))
     isSniffing = !isSniffing
     if (isSniffing == true)

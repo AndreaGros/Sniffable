@@ -5,21 +5,25 @@ from scapy.layers.l2 import ARP
 from scapy.layers.dns import DNS
 from datetime import datetime
 
+
 class Sniffer:
 
-    def __init__(self, iface=None, on_packet=None, bpf_filter=""):
+    def __init__(
+        self,
+        iface=None,
+        on_packet=None,
+    ):
         self.index = 0
         self.packets = {}
         self.iface = iface
         self.on_packet = on_packet
-        self.bpf_filter = bpf_filter
         self._sniffer = None
 
-    def start(self):
-        print(self.bpf_filter)
+    def start(self, filterUser=""):
+        print(filterUser)
         self._sniffer = AsyncSniffer(
             iface=self.iface,
-            filter=self.bpf_filter,
+            filter=filterUser,
             prn=self.callbackPacket,
             store=False,
         )
@@ -147,8 +151,8 @@ class Sniffer:
             result["raw_text"] = raw.decode("utf-8", errors="replace")
 
         return result
-    
+
     def downloadCom(self, pkts):
         filename = f"capture_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pcap"
-        wrpcap(filename,pkts.values())
+        wrpcap(filename, pkts.values())
         return filename

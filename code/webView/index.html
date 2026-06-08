@@ -56,6 +56,10 @@
         </div>
       </div>
 
+      <input class="form-control form-control-lg hk-input mb-2" type="text"
+        placeholder="_ filtro BPF: es. host 192.168.1.1 or port 80" id="filter">
+
+
       <div class="row g-2 mb-3">
         <div class="col-5">
           <button class="btn btn-lg hk-btn hk-btn-stop w-100" id="startStop">
@@ -147,8 +151,6 @@
         <button class="btn fbtn">DNS</button>
         <button class="btn fbtn">ICMP</button>
       </div>
-
-      <input class="form-control form-control-lg hk-input mb-2" type="text" placeholder="_ filtro BPF: es. host 192.168.1.1 or port 80">
 
       <div class="table-responsive hk-table-wrap mb-3">
         <table class="table table-sm hk-table">
@@ -297,7 +299,7 @@
           <div class="row g-2 mb-2">
             <div class="col-8">
               <label class="hk-label">DST IP</label>
-              <input  id="dstIP" class="form-control form-control-lg hk-input" type="text" value="192.168.1.1">
+              <input id="dstIP" class="form-control form-control-lg hk-input" type="text" value="192.168.1.1">
             </div>
             <div class="col-4">
               <label class="hk-label">TTL</label>
@@ -329,7 +331,8 @@
             </div>
             <div class="col-6">
               <label class="hk-label">FLAGS</label>
-              <input id="flags" class="form-control form-control-lg hk-input" type="text" value="S" placeholder="S/A/SA/R">
+              <input id="flags" class="form-control form-control-lg hk-input" type="text" value="S"
+                placeholder="S/A/SA/R">
             </div>
           </div>
         </div>
