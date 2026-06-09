@@ -93,6 +93,7 @@ async def handle_stop_sniffer(websocket, data):
 async def handle_clear_packets(websocket, data):
     sniffer.packets = {}
     sniffer.index = 0
+    print(sniffer.index)
 
     await websocket.send(json.dumps({"type": "status", "data": "cleared"}))
 

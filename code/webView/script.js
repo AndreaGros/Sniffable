@@ -40,7 +40,7 @@ startStop.addEventListener("click", () => {
 const clear = document.getElementById("clear")
 clear.addEventListener("click", () => {
     socket.send(JSON.stringify({
-        action: "clear"
+        action: "clear_packets"
     }))
     protos = {
         "tcp": 0,
