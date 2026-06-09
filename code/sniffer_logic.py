@@ -1,33 +1,35 @@
 # DOPO - con AsyncSniffer
-from scapy.all import AsyncSniffer, wrpcap
+from scapy.all import AsyncSniffer, wrpcap, get_if_list
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import ARP
 from scapy.layers.dns import DNS
 from datetime import datetime
 from scapy.arch.common import compile_filter
-from scapy.error import Scapy_Exception
+
 
 class Sniffer:
 
     def __init__(
         self,
-        iface=None,
         on_packet=None,
     ):
         self.index = 0
         self.packets = {}
-        self.iface = iface
         self.on_packet = on_packet
         self._sniffer = None
 
-    def start(self, filterUser=""):
+    def start(self, filterUser="", ifaceUser=""):
+        print(ifaceUser)
         if filterUser:
             try:
                 compile_filter(filterUser)
             except Exception as e:
                 raise ValueError(f"Filtro BPF non valido: {e}")
+            
+        if ifaceUser and ifaceUser not in get_if_list():
+            raise ValueError(f"Interfaccia non trovata: {ifaceUser}")
         self._sniffer = AsyncSniffer(
-            iface=self.iface,
+            iface=ifaceUser,
             filter=filterUser,
             prn=self.callbackPacket,
             store=False,

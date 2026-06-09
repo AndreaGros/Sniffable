@@ -19,13 +19,15 @@ const sendPacket = document.getElementById("sendPacket")
 const timeout = document.getElementById("timeout")
 const interfaceList = document.getElementById("interfaceList")
 const filter = document.getElementById("filter")
+const ifaces = document.getElementById("ifaces")
 
 // tasto di sniffer
 const startStop = document.getElementById("startStop")
 startStop.addEventListener("click", () => {
     socket.send(JSON.stringify({
         action: isSniffing == false ? "start_sniffer" : "stop_sniffer",
-        filter: filter.value
+        filter: filter.value,
+        iface: ifaces.value
     }))
     isSniffing = !isSniffing
     if (isSniffing == true)
@@ -151,6 +153,7 @@ function buildPacket() {
 
 // socket
 socket.addEventListener("open", () => {
+    socket.send(JSON.stringify({action: "get_interfaces"}))
     console.log("Open socket")
 })
 socket.addEventListener("close", () => {
@@ -217,6 +220,14 @@ socket.onmessage = (event) => {
     }
     else if (msg.type === "pcap_saved"){
         alert("Saved file: " + msg.data)
+    }
+    else if (msg.type === "interfaces"){
+        for (const iface of msg.data) {
+            const option = document.createElement("option")
+            option.textContent = iface.name + " " + iface.ip
+            option.value = iface.name
+            ifaces.appendChild(option)
+        }
     }
 }
 

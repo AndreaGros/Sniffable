@@ -4,6 +4,7 @@ from websockets.asyncio.server import serve
 from sniffer_logic import Sniffer
 from port_scanner_logic import Scanner
 from packet_sender_logic import Sender
+from ifaces import get_interfaces
 
 PORT = 5000
 
@@ -12,11 +13,12 @@ sniffer = None
 
 
 def server_callback(data, loop):
-    print(">>> server_callback", data["proto"])  # arriva qui?
-    try:
-        loop.call_soon_threadsafe(packet_queue.put_nowait, data)
-    except asyncio.QueueFull:
-        print(">>> QUEUE FULL")
+    def safe_put():
+        try:
+            packet_queue.put_nowait(data)
+        except asyncio.QueueFull:
+            pass
+    loop.call_soon_threadsafe(safe_put)
 
 
 async def packet_stream(websocket):
@@ -70,10 +72,14 @@ def packet_from_json(data: dict, iface=None):
 
     return sender
 
+async def handle_get_interfaces(websocket, data):
+    interfaces = get_interfaces()
+    print(interfaces)
+    await websocket.send(json.dumps({"type": "interfaces", "data": interfaces}))
 
 async def handle_start_sniffer(websocket, data):
     try:
-        sniffer.start(data.get("filter", ""))
+        sniffer.start(data.get("filter"), data.get("iface"))
         await websocket.send(json.dumps({"type": "status", "data": "sniffer_started"}))
     except ValueError as e:
         await websocket.send(json.dumps({"type": "error", "data": str(e)}))
@@ -141,6 +147,7 @@ async def handle_export_pcap(websocket, data):
     await websocket.send(json.dumps({"type": "pcap_saved", "data": file}))
 
 handlers = {
+    "get_interfaces": handle_get_interfaces,
     "start_sniffer": handle_start_sniffer,
     "stop_sniffer": handle_stop_sniffer,
     "clear_packets": handle_clear_packets,
