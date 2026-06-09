@@ -72,8 +72,11 @@ def packet_from_json(data: dict, iface=None):
 
 
 async def handle_start_sniffer(websocket, data):
-    sniffer.start(data.get("filter"))
-    await websocket.send(json.dumps({"type": "status", "data": "sniffer_started"}))
+    try:
+        sniffer.start(data.get("filter", ""))
+        await websocket.send(json.dumps({"type": "status", "data": "sniffer_started"}))
+    except ValueError as e:
+        await websocket.send(json.dumps({"type": "error", "data": str(e)}))
 
 
 async def handle_stop_sniffer(websocket, data):

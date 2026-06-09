@@ -4,7 +4,8 @@ from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import ARP
 from scapy.layers.dns import DNS
 from datetime import datetime
-
+from scapy.arch.common import compile_filter
+from scapy.error import Scapy_Exception
 
 class Sniffer:
 
@@ -20,7 +21,11 @@ class Sniffer:
         self._sniffer = None
 
     def start(self, filterUser=""):
-        print(filterUser)
+        if filterUser:
+            try:
+                compile_filter(filterUser)
+            except Exception as e:
+                raise ValueError(f"Filtro BPF non valido: {e}")
         self._sniffer = AsyncSniffer(
             iface=self.iface,
             filter=filterUser,
