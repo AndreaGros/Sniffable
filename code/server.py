@@ -34,7 +34,7 @@ def packet_from_json(data: dict, iface=None):
     eth = data.get("eth")
 
     if eth:
-        sender.add_ether(dst=eth.get("dst", "ff:ff:ff:ff:ff:ff"), src=eth.get("src"))
+        sender.add_ether(dst=eth.get("dst", "ff:ff:ff:ff:ff:ff"), src=eth.get("src", "192.168.1.1"))
 
     ip = data.get("ip")
 

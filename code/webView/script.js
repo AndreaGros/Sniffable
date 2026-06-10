@@ -109,14 +109,14 @@ function buildPacket() {
 
     if (chkETH.checked) {
         packet.eth = {
-            dst: dstMAC.value.trim(),
+            dst: dstMAC.value.trim() || "auto",
             src: srcMAC.value.trim() || "auto"
         };
     }
 
     if (chkIP.checked) {
         packet.ip = {
-            dst: dstIP.value.trim(),
+            dst: dstIP.value.trim() || "auto",
             src: srcIP.value.trim() || "auto",
             ttl: parseInt(ttl.value, 10) || 64
         };
