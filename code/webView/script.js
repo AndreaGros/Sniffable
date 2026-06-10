@@ -116,10 +116,12 @@ function buildPacket() {
 
     if (chkIP.checked) {
         packet.ip = {
-            dst: dstIP.value.trim() || "auto",
-            src: srcIP.value.trim() || "auto",
+            dst: dstIP.value.trim() || "127.0.0.1",
             ttl: parseInt(ttl.value, 10) || 64
         };
+        if (srcIP.value.trim()) {
+            packet.ip.src = srcIP.value.trim();
+        }
     }
     const selectedProto = proto.value;
 

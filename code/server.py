@@ -134,14 +134,15 @@ async def handle_port_scan(websocket, data):
 
 
 async def handle_sender(websocket, data):
-    pkt_structure = data.get("pkt")
-
-    sender_obj = packet_from_json(pkt_structure)
-
-    pkt = sender_obj.build_packet()
-
-    if pkt:
-        sender_obj.send(pkt)
+    try:
+        pkt_structure = data.get("pkt")
+        sender_obj = packet_from_json(pkt_structure)
+        pkt = sender_obj.build_packet()
+        if pkt:
+            sender_obj.send(pkt)
+        await websocket.send(json.dumps({"type": "status", "data": "sent"}))
+    except Exception as e:
+        await websocket.send(json.dumps({"type": "error", "data": str(e)}))
 
 async def handle_export_pcap(websocket, data):
     file = sniffer.downloadCom(sniffer.packets)

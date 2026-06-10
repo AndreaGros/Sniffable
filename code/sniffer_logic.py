@@ -5,7 +5,7 @@ from scapy.layers.l2 import ARP
 from scapy.layers.dns import DNS
 from datetime import datetime
 from scapy.arch.common import compile_filter
-
+from scapy.all import conf
 
 class Sniffer:
 
@@ -19,7 +19,7 @@ class Sniffer:
         self._sniffer = None
 
     def start(self, filterUser="", ifaceUser=""):
-        print(ifaceUser)
+
         if filterUser:
             try:
                 compile_filter(filterUser)
@@ -28,6 +28,8 @@ class Sniffer:
             
         if ifaceUser and ifaceUser not in get_if_list():
             raise ValueError(f"Interfaccia non trovata: {ifaceUser}")
+
+        conf.iface=ifaceUser
         self._sniffer = AsyncSniffer(
             iface=ifaceUser,
             filter=filterUser,
