@@ -145,15 +145,6 @@
     <!-- ══════════════ PACKETS ══════════════ -->
     <div class="page" id="page-packets">
 
-      <div class="d-flex flex-wrap gap-2 mb-2">
-        <button class="btn fbtn active">ALL</button>
-        <button class="btn fbtn">TCP</button>
-        <button class="btn fbtn">UDP</button>
-        <button class="btn fbtn">ARP</button>
-        <button class="btn fbtn">DNS</button>
-        <button class="btn fbtn">ICMP</button>
-      </div>
-
       <div class="table-responsive hk-table-wrap mb-3">
         <table class="table table-sm hk-table">
           <thead>
@@ -187,11 +178,6 @@
             <i class="bi bi-gear"></i>
           </button>
         </div>
-      </div>
-
-      <div class="sdiv">
-        <span>// DISPOSITIVI</span>
-        <span style="color:var(--g3)">6</span>
       </div>
 
       <div class="dev-item" data-bs-toggle="modal" data-bs-target="#devModal">
@@ -468,8 +454,6 @@
             <div class="col-6">
               <label class="hk-label">IFACE</label>
               <select class="form-select form-select-lg hk-input" id="interfaceList">
-                <option>eth0</option>
-                <option>wlan0</option>
               </select>
             </div>
           </div>
@@ -496,15 +480,6 @@
     setInterval(() => {
       document.getElementById('clock').textContent = new Date().toTimeString().slice(0, 8);
     }, 1000);
-
-    // ── FILTER BUTTONS ────────────────────────
-    document.querySelectorAll('.fbtn').forEach(btn => {
-      btn.addEventListener('click', function () {
-        // solo i bottoni nello stesso gruppo
-        this.closest('.d-flex').querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
   </script>
   <script src="./script.js"></script>
 </body>

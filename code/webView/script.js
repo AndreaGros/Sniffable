@@ -20,6 +20,7 @@ const timeout = document.getElementById("timeout")
 const interfaceList = document.getElementById("interfaceList")
 const filter = document.getElementById("filter")
 const ifaces = document.getElementById("ifaces")
+const interfacesList = document.getElementById("interfaceList")
 
 // tasto di sniffer
 const startStop = document.getElementById("startStop")
@@ -229,6 +230,7 @@ socket.onmessage = (event) => {
             option.textContent = iface.name + " " + iface.ip
             option.value = iface.name
             ifaces.appendChild(option)
+            interfaceList.appendChild(option.cloneNode(true))
         }
     }
 }

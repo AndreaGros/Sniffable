@@ -17,7 +17,8 @@ class Scanner:
         ans, unans = srp(
             Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=target),
             timeout=time,
-            verbose=True
+            verbose=True,
+            iface=interface
         )
 
         print("DONE")
