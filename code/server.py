@@ -61,10 +61,6 @@ def packet_from_json(data: dict, iface=None):
             sender.add_udp(
                 dport=transport.get("dstPort", 80), sport=transport.get("srcPort")
             )
-
-        elif proto == "ICMP":
-            sender.add_icmp()
-
     payload = data.get("payload")
 
     if payload:
@@ -136,7 +132,7 @@ async def handle_port_scan(websocket, data):
 async def handle_sender(websocket, data):
     try:
         pkt_structure = data.get("pkt")
-        sender_obj = packet_from_json(pkt_structure)
+        sender_obj = packet_from_json(pkt_structure, data.get("iface"))
         pkt = sender_obj.build_packet()
         if pkt:
             sender_obj.send(pkt)

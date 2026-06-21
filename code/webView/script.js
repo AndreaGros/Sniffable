@@ -21,6 +21,7 @@ const interfaceList = document.getElementById("interfaceList")
 const filter = document.getElementById("filter")
 const ifaces = document.getElementById("ifaces")
 const interfacesList = document.getElementById("interfaceList")
+const senderIfaces = document.getElementById("senderIfaces")
 
 // tasto di sniffer
 const startStop = document.getElementById("startStop")
@@ -100,7 +101,8 @@ sendPacket.addEventListener("click", () => {
     let pkt = buildPacket()
     socket.send(JSON.stringify({
         action: "sender",
-        "pkt": pkt
+        "pkt": pkt,
+        iface: senderIfaces.value
     }))
 })
 
@@ -231,6 +233,7 @@ socket.onmessage = (event) => {
             option.value = iface.name
             ifaces.appendChild(option)
             interfaceList.appendChild(option.cloneNode(true))
+            senderIfaces.appendChild(option.cloneNode(true))
         }
     }
 }
