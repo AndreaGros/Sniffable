@@ -66,4 +66,4 @@ class Sender:
     def send(self, pkt):
         print(self.iface)
         if pkt:
-            sendp(pkt)
+            sendp(pkt, iface=self.iface)

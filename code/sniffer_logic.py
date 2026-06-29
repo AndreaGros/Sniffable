@@ -1,5 +1,5 @@
-# DOPO - con AsyncSniffer
 from scapy.all import AsyncSniffer, wrpcap, get_if_list
+from scapy.layers.dot11 import Dot11, Dot11Beacon, Dot11ProbeReq, RadioTap
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import ARP
 from scapy.layers.dns import DNS
@@ -35,6 +35,7 @@ class Sniffer:
             filter=filterUser,
             prn=self.callbackPacket,
             store=False,
+            monitor=True
         )
         self._sniffer.start()
         print("Start sniffing")
@@ -45,9 +46,7 @@ class Sniffer:
             print("Stop sniffer")
 
     def callbackPacket(self, pkt):
-
         self.index += 1
-
         data = {
             "index": str(self.index),
             "src": "N/A",
@@ -57,38 +56,63 @@ class Sniffer:
             "length": str(len(pkt)),
         }
 
+        if pkt.haslayer(RadioTap):
+            data["proto"] = "802.11"
+            data["info"] = ""
+
+            if pkt.haslayer(Dot11):
+                dot11 = pkt[Dot11]
+                data["src"] = dot11.addr2 or "N/A"
+                data["dst"] = dot11.addr1 or "N/A"
+
+                if pkt.haslayer(Dot11Beacon):
+                    data["proto"] = "802.11 Beacon"
+                    try:
+                        ssid = pkt[Dot11Beacon].network_stats().get("ssid", "")
+                        data["info"] = f"SSID: {ssid}"
+                    except:
+                        data["info"] = "Beacon"
+
+                elif pkt.haslayer(Dot11ProbeReq):
+                    data["proto"] = "802.11 ProbeReq"
+                    data["info"] = "Probe Request"
+
+            if pkt.haslayer(IP):
+                data["src"] = pkt[IP].src
+                data["dst"] = pkt[IP].dst
+                if pkt.haslayer(TCP):
+                    data["proto"] = "TCP"
+                    data["info"] = str(pkt[TCP].flags)
+                elif pkt.haslayer(UDP):
+                    data["proto"] = "UDP"
+
+            if self.on_packet:
+                self.on_packet(data)
+            self.packets[str(self.index)] = pkt
+            return
+
         # ARP
         if pkt.haslayer(ARP):
             arp = pkt[ARP]
-
             data["proto"] = "ARP"
-
             data["sender_ip"] = arp.psrc
             data["sender_mac"] = arp.hwsrc
             data["target_ip"] = arp.pdst
             data["target_mac"] = arp.hwdst
-
             if arp.op == 1:
                 data["info"] = f"ARP Request: Who has {arp.pdst}?"
             elif arp.op == 2:
                 data["info"] = f"ARP Reply: {arp.psrc} is at {arp.hwsrc}"
 
-        # IP
         elif pkt.haslayer(IP):
-
             data["src"] = pkt[IP].src
             data["dst"] = pkt[IP].dst
-
-            # TCP
             if pkt.haslayer(TCP):
                 data["proto"] = "TCP"
                 data["info"] = str(pkt[TCP].flags)
-
-            # DNS
             elif pkt.haslayer(DNS):
                 dns = pkt[DNS]
                 data["proto"] = "DNS"
-
                 if dns.qr == 0 and dns.qd:
                     try:
                         data["info"] = dns.qd.qname.decode()
@@ -96,12 +120,8 @@ class Sniffer:
                         data["info"] = "DNS Query"
                 else:
                     data["info"] = "DNS Response"
-
-            # UDP
             elif pkt.haslayer(UDP):
                 data["proto"] = "UDP"
-
-            # ICMP
             elif pkt.haslayer(ICMP):
                 data["proto"] = "ICMP"
 

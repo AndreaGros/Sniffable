@@ -195,7 +195,6 @@ socket.onmessage = (event) => {
             const v = document.createElement("span");
             v.className = "modal-val";
 
-            // HEX trattato separatamente per stile
             if (key.toLowerCase() === "raw_hex" || key.toLowerCase() === "raw_text") {
                 const hex = document.createElement("div");
                 hex.className = "modal-hex";

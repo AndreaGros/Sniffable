@@ -1,0 +1,11 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.sniffable.app
+productName: Sniffable
+files:
+  - filter:
+      - '**/*'
+      - '!venv'
+      - '!venv/**'
+electronVersion: 42.1.0

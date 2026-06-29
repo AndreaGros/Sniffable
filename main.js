@@ -7,7 +7,7 @@ app.commandLine.appendSwitch('ozone-platform', 'wayland');
 function createWindow() {
   const win = new BrowserWindow({
     alwaysOnTop: false,
-    fullscreen: true,
+    fullscreen: false,
     autoHideMenuBar: true
   });
 

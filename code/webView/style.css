@@ -543,6 +543,8 @@ body::before {
 
 .modal-val {
   color: var(--g3);
+  word-break: break-all;
+
 }
 
 .modal-hex {

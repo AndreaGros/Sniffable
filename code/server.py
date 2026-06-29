@@ -24,8 +24,8 @@ def server_callback(data, loop):
 async def packet_stream(websocket):
     while True:
         packet = await packet_queue.get()
-
         await websocket.send(json.dumps({"type": "packet", "data": packet}))
+        print({"type": "packet", "data": packet})
 
 
 def packet_from_json(data: dict, iface=None):

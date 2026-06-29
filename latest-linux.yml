@@ -1,0 +1,9 @@
+version: 1.0.0
+files:
+  - url: Sniffable-1.0.0.AppImage
+    sha512: FhBqDV0EmATz9+uG0Xuv6eNKrExR6MA+E2CKBH6nd5uKLuVen/Jc/qXtfMrUEZiod5TCWq2hhgLtU7g2BIE7sA==
+    size: 121218165
+    blockMapSize: 128137
+path: Sniffable-1.0.0.AppImage
+sha512: FhBqDV0EmATz9+uG0Xuv6eNKrExR6MA+E2CKBH6nd5uKLuVen/Jc/qXtfMrUEZiod5TCWq2hhgLtU7g2BIE7sA==
+releaseDate: '2026-05-17T19:35:33.459Z'
